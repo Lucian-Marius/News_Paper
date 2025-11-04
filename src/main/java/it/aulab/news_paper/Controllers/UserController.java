@@ -46,7 +46,7 @@ public class UserController {
                                     HttpServletRequest request,
                                     HttpServletResponse response) {
         User existingUser = UserServices.findUserByEmail(userDto.getEmail());
-        if (existingUser != null && existingUser.getEmail() != null && existingUser.getEmail().isEmpty()) {
+        if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
             result.reject("email", null, "there is already an account registered with this email");
         }
 
