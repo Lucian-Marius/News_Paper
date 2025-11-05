@@ -38,6 +38,12 @@ public class UserController {
             return "auth/register";
         }
 
+    @GetMapping("/auth/login")
+        public String login() 
+        {
+            return "auth/login";
+        }
+
     @PostMapping("/register/save")
         public String registration(@Valid @ModelAttribute("user") UserDto userDto, 
                                     BindingResult result,

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{index :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - News Paper</title>
+</head>
+<body>
+    <nav th:replace="~{index :: nav}"></nav>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Login</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Login Error Message -->
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            Invalid username or password!
+                        </div>
+                        
+                        <!-- Logout Success Message -->
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            You have been logged out successfully!
+                        </div>
+                        
+                        <!-- Session Expired Message -->
+                        <div th:if="${param['session-expired']}" class="alert alert-warning">
+                            Your session has expired. Please login again.
+                        </div>
+                        
+                        <form th:action="@{/auth/login}" method="post">
+                            <div class="form-group mb-3">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                    <label class="form-check-label" for="remember-me">Remember me</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-3">
+                            <p>Don't have an account? <a th:href="@{/auth/register}">Register here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{index :: footer}"></footer>
+</body>
+</html>
