@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
     
 <header th:insert = "~{index :: head}"></header>
 
 <body th:insert = "~{index :: nav}"></body>
+
+<div th:if = "${param.notAuthorized}">
+    <div class="alert text-danger">
+        Not Authorized !
+    </div>
+</div>
 
 <h2 class = "text-center vh-100">HOME</h2>
 

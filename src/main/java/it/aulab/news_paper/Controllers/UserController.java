@@ -56,6 +56,8 @@ public class UserController {
             result.reject("email", null, "there is already an account registered with this email");
         }
 
+        System.out.println("Registration method called with email: " + userDto.getEmail());
+
         if (result.hasErrors()){
             model.addAttribute("user", userDto);
             return "auth/register";

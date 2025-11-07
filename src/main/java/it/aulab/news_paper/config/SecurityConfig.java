@@ -1,17 +1,28 @@
 package it.aulab.news_paper.config;
 
+import it.aulab.news_paper.services.CustomUserDetailsService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig
 {
+
+    @Autowired
+    private CustomUserDetailsService CustomUserDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception 
     {
@@ -20,12 +31,13 @@ public class SecurityConfig
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/auth/register/**").permitAll()
                 .requestMatchers("/auth/register").permitAll()
+                .requestMatchers("/register/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/auth/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout(logout -> logout
@@ -38,10 +50,17 @@ public class SecurityConfig
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
-                .expiredUrl("/login?session-expired=true")
+                .expiredUrl("/auth/login?session-expired=true")
             );
 
             return http.build();
             
     }
+
+    
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(CustomUserDetailsService);   
+    }
+    
 }
