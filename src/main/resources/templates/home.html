@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{index :: head}">
     <meta charset="UTF-8">
     <title>Home Page</title>
 </head>
-    
-<header th:insert = "~{index :: head}"></header>
+<body>
+    <header th:insert="~{index :: header}"></header>
 
-<body th:insert = "~{index :: nav}"></body>
+    <nav th:insert="~{index :: nav}"></nav>
 
-<div th:if = "${param.notAuthorized}">
-    <div class="alert text-danger">
-        Not Authorized !
+    <div th:if="${param.notAuthorized}">
+        <div class="alert text-danger">
+            Not Authorized !
+        </div>
     </div>
-</div>
 
-<h2 class = "text-center vh-100">HOME</h2>
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
 
-<footer th:insert = "~{index :: footer}"></footer>
+    <h2 class="text-center vh-100">HOME</h2>
 
-
+    <footer th:insert="~{index :: footer}"></footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
