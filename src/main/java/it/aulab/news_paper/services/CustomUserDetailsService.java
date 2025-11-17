@@ -13,7 +13,6 @@ import it.aulab.news_paper.Repositories.UserRepository;
 import it.aulab.news_paper.Models.User;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 import it.aulab.news_paper.Models.Role;
