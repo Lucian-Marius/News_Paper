@@ -11,4 +11,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Modifying
     @Query(value = "DELETE FROM images WHERE path = :path ", nativeQuery = true)
     void deleteByPath(@Param("path") String path);
+
+    // Fetch image by article id
+    Image findByArticleId(Long articleId);
 }

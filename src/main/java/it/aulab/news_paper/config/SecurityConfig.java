@@ -39,6 +39,8 @@ public class SecurityConfig
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/auth/register/**").permitAll()
                 .requestMatchers("/auth/register").permitAll()
+                .requestMatchers("/articles").permitAll()
+                .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
                 .anyRequest().authenticated()
             )

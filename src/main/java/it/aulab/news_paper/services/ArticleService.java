@@ -36,16 +36,23 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private it.aulab.news_paper.Repositories.ImageRepository imageRepository;
+
     @Autowired 
     private ModelMapper modelMapper;
 
     @Override
     public List<ArticleDto> readAll() {
-        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
-        for (Article article: articleRepository.findAll()) {
-            dtos.add(modelMapper.map(article, ArticleDto.class));
-        }
-        return dtos;
+            List<ArticleDto> dtos = new ArrayList<>();
+            for (Article article : articleRepository.findAll()) {
+                ArticleDto dto = modelMapper.map(article, ArticleDto.class);
+                // Fetch and set image for this article
+                it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
+                dto.setImage(image);
+                dtos.add(dto);
+            }
+            return dtos;
     }
 
 
