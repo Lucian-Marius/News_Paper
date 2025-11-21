@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.modelmapper.ModelMapper;
 import java.security.Principal;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import it.aulab.news_paper.Models.Article;
@@ -29,14 +30,23 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired 
-    private ModelMapper modelMapper;
-
     @Autowired
     private ArticleRepository articleRepository;
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired 
+    private ModelMapper modelMapper;
+
+    @Override
+    public List<ArticleDto> readAll() {
+        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
+        for (Article article: articleRepository.findAll()) {
+            dtos.add(modelMapper.map(article, ArticleDto.class));
+        }
+        return dtos;
+    }
 
 
     @Override
@@ -78,12 +88,6 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
 
         ArticleDto dto = modelMapper.map(savedArticle, ArticleDto.class);
         return dto;
-    }
-
-    @Override
-    public List<ArticleDto> readAll() {
-        // TODO: Implement readAll method
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override

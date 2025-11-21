@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import it.aulab.news_paper.Dtos.CategoryDto;
+import it.aulab.news_paper.Dtos.ArticleDto;
 import it.aulab.news_paper.Models.Article;
 import it.aulab.news_paper.Models.Category;
 import it.aulab.news_paper.services.CrudService;
@@ -32,6 +37,18 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @GetMapping
+    private String articlesIndex(Model viewModel) {
+        viewModel.addAttribute("title", "All articles");
+
+        List<ArticleDto> articles = articleService.readAll();
+
+        Collections.sort(articles, Comparator.comparing(ArticleDto::getPublishDate).reversed());
+        viewModel.addAttribute("articles", articles);
+
+        return "article/articles";
+    }
 
 
     @GetMapping("create") 
