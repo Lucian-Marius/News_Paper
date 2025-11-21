@@ -3,6 +3,7 @@ package it.aulab.news_paper.Models;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
+// ...existing code...
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,12 +36,17 @@ public class Article {
     @Column(nullable = false, length = 100)
     @NotEmpty
     @Size(max = 100)
+    private String title;
+
+    @Column(nullable = false, length = 100)
+    @NotEmpty
+    @Size(max = 100)
     private String subtitle;
 
     @Column(nullable = false, length = 1000)
     @NotEmpty
     @Size(max = 1000)
-    private String Body;
+    private String body;
 
     @Column(nullable = true, length = 8)
     @NotNull
@@ -53,4 +60,6 @@ public class Article {
     @ManyToOne
     @JsonIgnoreProperties({"articles"})
     private Category category;
+
+    // ...existing code...
 }

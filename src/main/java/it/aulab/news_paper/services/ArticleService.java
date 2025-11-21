@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.modelmapper.ModelMapper;
 import java.security.Principal;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import it.aulab.news_paper.Models.Article;
 import it.aulab.news_paper.services.ArticleService;
@@ -15,10 +16,15 @@ import it.aulab.news_paper.Repositories.UserRepository;
 import it.aulab.news_paper.Repositories.ArticleRepository;
 import it.aulab.news_paper.Models.User;
 import it.aulab.news_paper.Dtos.ArticleDto;
+import it.aulab.news_paper.services.CustomUserDetails;
+import it.aulab.news_paper.services.ImageService;
+
 
 
 @Service
 public class ArticleService implements CrudService<ArticleDto, Article, Long> {
+
+    
 
     @Autowired
     private UserRepository userRepository;
@@ -29,18 +35,48 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private ImageService imageService;
+
 
     @Override
-    public ArticleDto create(Article article, Principal principal, MultipartFile file) {
+    public ArticleDto create(Article article, Principal principal, MultipartFile image) {
+        System.out.println("[DEBUG] ArticleService: create called");
+        String url = " ";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
             User user = (userRepository.findById(userDetails.getId())).get();
             article.setUser(user);
+            System.out.println("[DEBUG] ArticleService: User set to " + user.getEmail());
         }
 
-        ArticleDto dto = modelMapper.map(articleRepository.save(article), ArticleDto.class);
+        // Ensure both title and subtitle are set before saving
+        if (article.getTitle() == null || article.getTitle().isEmpty()) {
+            article.setTitle(article.getSubtitle()); // fallback if needed
+            System.out.println("[DEBUG] ArticleService: Title fallback to subtitle");
+        }
 
+        Article savedArticle = articleRepository.save(article);
+        System.out.println("[DEBUG] ArticleService: Article saved with ID " + savedArticle.getId());
+
+        if (image != null && !image.isEmpty()) {
+            System.out.println("[DEBUG] ArticleService: Image upload started");
+            try {
+                CompletableFuture<String> futureUrl = imageService.saveImageOnCloud(image);
+                url = futureUrl.get();
+                System.out.println("[DEBUG] ArticleService: Image uploaded to " + url);
+                imageService.saveImageOnDB(url, savedArticle);
+                System.out.println("[DEBUG] ArticleService: Image saved in DB");
+            } catch (Exception e) {
+                System.out.println("[DEBUG] ArticleService: Exception during image upload");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("[DEBUG] ArticleService: No image uploaded");
+        }
+
+        ArticleDto dto = modelMapper.map(savedArticle, ArticleDto.class);
         return dto;
     }
 

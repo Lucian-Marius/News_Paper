@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import java.security.Principal;
@@ -46,17 +47,24 @@ public class ArticleController {
                                 BindingResult result,
                                 RedirectAttributes redirectAttributes,
                                 Principal principal,
-                                MultipartFile file,
+                                @RequestParam("image") MultipartFile image,
                                 Model viewModel) {
-                                    if(result.hasErrors()){
-                                        viewModel.addAttribute("title", "Create an article");
-                                        viewModel.addAttribute("article", article);
-                                        viewModel.addAttribute("category", categoryService.readAll());
-                                        return "article/create";
-                                    }
-                                    
-                                    articleService.create(article, principal, file);
-                                    redirectAttributes.addFlashAttribute("successMessage", "Article created");
-                                    return "redirect:/";
-                                }
+        System.out.println("[DEBUG] ArticleController: Received POST /articles");
+        System.out.println("[DEBUG] ArticleController: Article title=" + article.getTitle() + ", subtitle=" + article.getSubtitle());
+        System.out.println("[DEBUG] ArticleController: Image isEmpty=" + (image == null ? "null" : image.isEmpty()));
+        if(result.hasErrors()){
+            System.out.println("[DEBUG] ArticleController: Validation errors found");
+            result.getFieldErrors().forEach(error -> {
+                System.out.println("[DEBUG] Validation error - field: " + error.getField() + ", message: " + error.getDefaultMessage());
+            });
+            viewModel.addAttribute("title", "Create an article");
+            viewModel.addAttribute("article", article);
+            viewModel.addAttribute("category", categoryService.readAll());
+            return "article/create";
+        }
+        articleService.create(article, principal, image);
+        System.out.println("[DEBUG] ArticleController: ArticleService.create called");
+        redirectAttributes.addFlashAttribute("successMessage", "Article created");
+        return "redirect:/";
+    }
 }

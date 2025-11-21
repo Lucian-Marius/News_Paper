@@ -18,19 +18,39 @@
                         <h3 class="text-center" th:text="${title}">Create an Article</h3>
                     </div>
                     <div class="card-body">
-                        <form th:action="@{/articles}" th:object="${article}" method="post">
+                        <form th:action="@{/articles}" th:object="${article}" method="post" enctype="multipart/form-data">
                             <!-- Article Title -->
                             <div class="mb-3">
-                                <label for="subtitle" class="form-label">Article Title</label>
+                                <label for="title" class="form-label">Article Title</label>
                                 <input type="text" 
-                                       class="form-control" 
-                                       id="subtitle" 
-                                       th:field="*{subtitle}" 
-                                       placeholder="Enter article title" 
-                                       required>
+                                    class="form-control" 
+                                    id="title" 
+                                    th:field="*{title}" 
+                                    placeholder="Enter article title" 
+                                    required>
+                                <div th:if="${#fields.hasErrors('title')}" 
+                                  class="text-danger" 
+                                  th:errors="*{title}"></div>
+                            </div>
+
+                            <!-- Article Subtitle -->
+                            <div class="mb-3">
+                                <label for="subtitle" class="form-label">Subtitle</label>
+                                <input type="text" 
+                                    class="form-control" 
+                                    id="subtitle" 
+                                    th:field="*{subtitle}" 
+                                    placeholder="Enter article subtitle" 
+                                    required>
                                 <div th:if="${#fields.hasErrors('subtitle')}" 
-                                     class="text-danger" 
-                                     th:errors="*{subtitle}"></div>
+                                  class="text-danger" 
+                                  th:errors="*{subtitle}"></div>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*">
                             </div>
 
                             <!-- Article Content -->
@@ -46,6 +66,9 @@
                                      class="text-danger" 
                                      th:errors="*{body}"></div>
                             </div>
+
+                            <!-- Error Message Display -->
+                            <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
 
                             <!-- Category Selection -->
                             <div class="mb-3">
