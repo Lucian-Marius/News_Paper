@@ -10,6 +10,9 @@ import java.security.Principal;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.Optional;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import it.aulab.news_paper.Models.Article;
 import it.aulab.news_paper.services.ArticleService;
@@ -97,11 +100,7 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
         return dto;
     }
 
-    @Override
-    public ArticleDto read(Long id) {
-        // TODO: Implement read method
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
+  
 
     @Override
     public ArticleDto update(Long id, Article article, MultipartFile file) {
@@ -113,6 +112,20 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
     public void delete(Long id) {
         // TODO: Implement delete method
         throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public ArticleDto read(Long key) {
+        Optional<Article> optArticle = articleRepository.findById(key);
+        if (optArticle.isPresent()) {
+            ArticleDto dto = modelMapper.map(optArticle.get(), ArticleDto.class);
+            // Fetch and set image for this article
+            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(optArticle.get().getId());
+            dto.setImage(image);
+            return dto;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article " + key + " not found");
+        }
     }
 }
 

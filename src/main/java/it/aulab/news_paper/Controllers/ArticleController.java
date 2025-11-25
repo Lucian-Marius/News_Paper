@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import java.security.Principal;
@@ -83,5 +84,12 @@ public class ArticleController {
         System.out.println("[DEBUG] ArticleController: ArticleService.create called");
         redirectAttributes.addFlashAttribute("successMessage", "Article created");
         return "redirect:/";
+    }
+
+    @GetMapping("detail/{id}")
+    public String detailArticle(@PathVariable("id") Long id, Model viewModel) {
+        viewModel.addAttribute("title", "Article Detail");
+        viewModel.addAttribute("article", articleService.read(id));
+        return "article/detail";
     }
 }

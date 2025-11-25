@@ -42,6 +42,7 @@ public class SecurityConfig
                 .requestMatchers("/articles").permitAll()
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
+                .requestMatchers("/article/detail/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
