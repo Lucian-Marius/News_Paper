@@ -34,7 +34,7 @@ public class CategoryService implements CrudService<CategoryDto, Category, Long>
 
     @Override
     public CategoryDto read(Long key){
-        throw new UnsupportedOperationException();
+        return modelMapper.map(categoryRepository.findById(key), CategoryDto.class);
     }
 
     @Override

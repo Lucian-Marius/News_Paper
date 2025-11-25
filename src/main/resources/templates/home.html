@@ -5,9 +5,7 @@
     <title>Home Page</title>
 </head>
 <body>
-    <header th:insert="~{index :: header}"></header>
-
-    <nav th:insert="~{index :: nav}"></nav>
+    <div th:replace="~{index :: nav}"></div>
 
     <div th:if="${param.notAuthorized}">
         <div class="alert text-danger">
@@ -19,9 +17,33 @@
         <p th:text="${successMessage}"></p>
     </div>
 
-    <h2 class="text-center vh-100">HOME</h2>
+    <div class="m-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-10 mb-5">
+                    <h1 class="text-center">Gli ultimi articoli</h1>
+                </div>
+            </div>
+            <div class="container" th:if="${articles.size() > 0}">
+                <div class="row justify-content-center mb-5">
+                    <div th:each="article:${articles}" class="col-10 col-md-4 d-flex justify-content-center">
+                        <div class="card-body">
+                            <img th:if="${article.image != null}" th:src="${article.image.path}" class="card-img-top" alt="...">
+                            <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${article.title}"></h5>
+                                <p class="card-text" th:text="${article.subtitle}"></p>
+                                <p class="card-text" th:text="${article.user.username}"></p>
+                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-primary">Leggi</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <footer th:insert="~{index :: footer}"></footer>
+    <div th:replace="~{index :: footer}"></div>
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

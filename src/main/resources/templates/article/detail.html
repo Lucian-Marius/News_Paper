@@ -29,30 +29,26 @@
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <!-- Subtitle -->
-                        <p th:text="${article.subtitle}">Sottotitolo</p>
+                        <h5 th:text="${article.subtitle}">Sottotitolo</h5>
 
                         <!-- Author Info -->
-                        <div class="container my-5">
-                            <p th:text="${'By ' + article.user.username}">By Author</p>
+                        <div class="text-muted my-3">
+                            <p>Redatto il <p th:text="${article.publishDate}">data</p> da
+                            <a class="text-muted" th:href="@{/search/{id}(id=${article.user.id})}" >
+                                <p th:text="${article.user.username}">User</p>
+                            </a>
+                            </p>
                         </div>
 
-                        <!-- Category -->
+                        <!-- Category & Author Tags -->
                         <div class="row mb-4">
-                            <div class="col-1">
-                                <a class="badge rounded-pill text-bg-primary" th:href="@{/category/search/{id}(id=${article.category.id})}" th:text="${article.category.name}">Category</a>
+                            <div class="col-auto">
+                                <a class="badge rounded-pill text-bg-primary" th:href="@{/categories/search/{id}(id=${article.category.id})}" th:text="${article.category.name}">Category</a>
                             </div>
                         </div>
 
-                        <!-- Edit & Delete Controls (if author) -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlide" data-bs-slide="prev" aria-label="Previous">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselSlide" data-bs-slide="next" aria-label="Next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        </button>
-
-                        <!-- Edit Button -->
-                        <div class="row mb-3">
+                        <!-- Edit & Delete Controls -->
+                        <div class="row mb-4">
                             <div class="col">
                                 <button class="btn btn-warning" type="button" data-bs-toggle="tooltip" title="Modifica articolo">
                                     Modifica
@@ -64,15 +60,8 @@
                         </div>
 
                         <!-- Article Text Content -->
-                        <div class="text-center">
-                            <p th:text="${article.subtitle}">Sottotitolo</p>
-                        </div>
-
-                        <!-- Category Tags -->
-                        <div class="row mb-4">
-                            <div class="col-3" th:if="${article.category != null}">
-                                <a class="link-info link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover" th:href="@{/category/search/{id}(id=${article.category.id})}" th:text="${article.category.name}">Category</a>
-                            </div>
+                        <div class="mt-5">
+                            <p th:text="${article.body}">Article content goes here</p>
                         </div>
                     </div>
                 </div>

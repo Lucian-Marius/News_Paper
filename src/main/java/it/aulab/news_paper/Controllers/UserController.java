@@ -4,17 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.Comparator;
+
 import it.aulab.news_paper.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import it.aulab.news_paper.Dtos.ArticleDto;
 import it.aulab.news_paper.Dtos.UserDto;
 import it.aulab.news_paper.Models.User;
+import it.aulab.news_paper.services.ArticleService;
 
 
 
@@ -22,13 +30,23 @@ import it.aulab.news_paper.Models.User;
 
 public class UserController {
     @Autowired
-
     private UserService UserServices;
 
+    @Autowired
+    private ArticleService articleService;
+
     @GetMapping("/") 
-        public String home() 
+        public String home(Model viewModel)
         {
-        return "home";
+            List<ArticleDto> articles = articleService.readAll();
+
+            Collections.sort(articles, Comparator.comparing(ArticleDto::getPublishDate).reversed());
+
+            List<ArticleDto> lastThreeArticles = articles.stream().limit(3).collect(Collectors.toList());
+
+            viewModel.addAttribute("articles", lastThreeArticles);
+
+            return "home";
         }
 
     @GetMapping("/auth/register")
@@ -66,6 +84,16 @@ public class UserController {
         UserServices.saveUser(userDto, redirectAttributes, request, response);
         redirectAttributes.addFlashAttribute("successMessage", "Registration Successful !");
         return "redirect:/";
+    }
+
+    @GetMapping("/search/{id}") 
+    public String userArticleSearch(@PathVariable("id") Long id, Model viewModel) {
+        User user = UserServices.find(id);
+        viewModel.addAttribute("title", "All articles for user " + user.getUsername());
+
+        List<ArticleDto> articles = articleService.searchByAuthor(user);
+        viewModel.addAttribute("articles", articles);
+        return "article/articles";
     }
 }
 

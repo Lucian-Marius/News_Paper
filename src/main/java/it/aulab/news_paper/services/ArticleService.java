@@ -15,14 +15,13 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 import it.aulab.news_paper.Models.Article;
+import it.aulab.news_paper.Models.Category;
 import it.aulab.news_paper.services.ArticleService;
 import it.aulab.news_paper.Repositories.UserRepository;
 import it.aulab.news_paper.Repositories.ArticleRepository;
 import it.aulab.news_paper.Models.User;
 import it.aulab.news_paper.Dtos.ArticleDto;
 import it.aulab.news_paper.services.CustomUserDetails;
-import it.aulab.news_paper.services.ImageService;
-
 
 
 @Service
@@ -115,11 +114,43 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
     }
 
     @Override
+    public List<ArticleDto> searchByCategory(Article article) {
+        // Note: Article parameter is not used; we pass Category from controller
+        // This is a workaround for the generic interface
+        return new ArrayList<>();
+    }
+
+    // Overloaded method to handle Category search
+    public List<ArticleDto> searchByCategory(Category category) {
+        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
+        for(Article article : articleRepository.findByCategory(category)) {
+            ArticleDto dto = modelMapper.map(article, ArticleDto.class);
+            // Fetch and set image for this article
+            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
+            dto.setImage(image);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    // Search by author method (not part of CrudService interface)
+    public List<ArticleDto> searchByAuthor(User user) {
+        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
+        for(Article article : articleRepository.findByUser(user)) {
+            ArticleDto dto = modelMapper.map(article, ArticleDto.class);
+            // Fetch and set image for this article
+            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
+            dto.setImage(image);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Override
     public ArticleDto read(Long key) {
         Optional<Article> optArticle = articleRepository.findById(key);
         if (optArticle.isPresent()) {
             ArticleDto dto = modelMapper.map(optArticle.get(), ArticleDto.class);
-            // Fetch and set image for this article
             it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(optArticle.get().getId());
             dto.setImage(image);
             return dto;
