@@ -53,4 +53,9 @@ public class CategoryService implements CrudService<CategoryDto, Category, Long>
     public void delete(Long key){
 
     }
+
+    @Override
+    public List<CategoryDto> searchByCategory(Category category) {
+        return new ArrayList<>();
+    }
 }

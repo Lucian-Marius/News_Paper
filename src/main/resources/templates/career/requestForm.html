@@ -1,0 +1,56 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Career Request</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">News Paper</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/auth/login">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<h1 th:text="${title}">Richiesta collaborazione</h1>
+				<form th:action="@{/operations/career/request/save}" method="POST" th:object="${careerRequest}" class="mt-4">
+					<div class="mb-3">
+						<label for="body" class="form-label">Motivo della richiesta:</label>
+						<textarea id="body" class="form-control" th:field="*{body}" placeholder="Inserisci motivazione..." rows="5"></textarea>
+					</div>
+					<div class="mb-3">
+						<label for="role" class="form-label">Per quale ruolo?</label>
+						<select id="role" th:field="*{role}" class="form-select">
+							<option value="">-- Seleziona un ruolo --</option>
+							<option th:each="role : ${roles}" th:value="${role.id}" th:text="${#strings.substring(role.name, 5)}"></option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-success">Effettua richiesta</button>
+					<a href="/" class="btn btn-secondary">Annulla</a>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<footer class="bg-dark text-white mt-5 py-4">
+		<div class="container text-center">
+			<p>&copy; 2025 News Paper. All rights reserved.</p>
+		</div>
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

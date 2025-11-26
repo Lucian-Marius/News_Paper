@@ -1,4 +1,5 @@
 DROP TABLE user_roles;
+DROP TABLE career_request;
 DROP TABLE images;
 DROP TABLE articles;
 DROP TABLE categories;
