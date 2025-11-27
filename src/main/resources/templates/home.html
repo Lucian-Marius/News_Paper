@@ -17,6 +17,10 @@
         <p th:text="${successMessage}"></p>
     </div>
 
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
     <div class="m-3">
         <div class="container">
             <div class="row justify-content-center">
