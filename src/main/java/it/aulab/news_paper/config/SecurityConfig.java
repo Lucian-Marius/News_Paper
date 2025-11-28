@@ -46,6 +46,8 @@ public class SecurityConfig
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/article/detail/**").permitAll()
+                .requestMatchers("/operations/career/request/detail/**").permitAll()
+                .requestMatchers("/admin/dashboard").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

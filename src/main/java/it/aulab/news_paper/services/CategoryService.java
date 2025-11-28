@@ -4,10 +4,14 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import it.aulab.news_paper.Dtos.CategoryDto;
 import it.aulab.news_paper.Models.Category;
@@ -34,19 +38,23 @@ public class CategoryService implements CrudService<CategoryDto, Category, Long>
 
     @Override
     public CategoryDto read(Long key){
-        return modelMapper.map(categoryRepository.findById(key), CategoryDto.class);
+        return modelMapper.map(categoryRepository.findById(key).orElseThrow(() -> new RuntimeException("Category not found")), CategoryDto.class);
     }
 
     @Override
     public CategoryDto create(Category model, Principal principal, MultipartFile file) {
-        throw new UnsupportedOperationException();
+        return modelMapper.map(categoryRepository.save(model), CategoryDto.class);
 
     }
 
     @Override
     public CategoryDto update(Long key, Category model, MultipartFile file) {
-        throw new UnsupportedOperationException();
-
+        if (categoryRepository.existsById(key)){
+            model.setId(key);
+            return modelMapper.map(categoryRepository.save(model), CategoryDto.class);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override

@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.aulab.news_paper.Models.CareerRequest;
+import it.aulab.news_paper.Models.Role;
 import it.aulab.news_paper.Repositories.CareerRequestRepository;
+import it.aulab.news_paper.Repositories.RoleRepository;
+import it.aulab.news_paper.Repositories.UserRepository;
 import it.aulab.news_paper.Models.User;
 
 import java.util.List;
@@ -18,6 +21,12 @@ public class CareerRequestServiceImpl implements CareerRequestService {
 
     @Autowired
     private EmailService emailService;  
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
     
     @Transactional
     public Boolean isRoleAlreadyAssigned(User user, CareerRequest careerRequest) {
@@ -44,12 +53,26 @@ public class CareerRequestServiceImpl implements CareerRequestService {
     }
 
     @Override
-    public void careerAccept(Long requestId){
-        throw new UnsupportedOperationException("Unimplemented Method");
+    public CareerRequest find(Long id) {
+        return careerRequestRepository.findById(id).get();
     }
 
     @Override
-    public CareerRequest find(Long id) {
-        throw new UnsupportedOperationException("Unimplemented Method");
+    public void careerAccept(Long requestID) {
+        CareerRequest request = careerRequestRepository.findById(requestID).get();
+
+        User user = request.getUser();
+        Role role = request.getRole();
+
+        List<Role> rolesUser = user.getRoles();
+        Role newRole = roleRepository.findByName(role.getName());
+        rolesUser.add(newRole);
+
+        user.setRoles(rolesUser);
+        userRepository.save(user);
+        request.setIsChecked(true);
+        careerRequestRepository.save(request);
+
+        emailService.sendSimpleEmail("lucian.marius.work@gmail.com", "Request", "Role granted");
     }
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- //create a new category -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{index :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Category - News Paper</title>
+</head>
+<body>
+    <header th:insert="~{index :: header}"></header>
+
+    <nav th:insert="~{index :: nav}"></nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Update Category</h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/categories/update/{id}(id=${category.id})}" th:object="${category}" method="post">
+                            <!-- Category Name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Category Name</label>
+                                <input type="text" 
+                                    class="form-control" 
+                                    id="name" 
+                                    th:field="*{name}" 
+                                    placeholder="Enter category name" 
+                                    required>
+                                <div th:if="${#fields.hasErrors('name')}" 
+                                  class="text-danger" 
+                                  th:errors="*{name}"></div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:insert="~{index :: footer}"></footer>

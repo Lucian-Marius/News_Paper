@@ -22,18 +22,26 @@ import jakarta.validation.Valid;
 import it.aulab.news_paper.Dtos.ArticleDto;
 import it.aulab.news_paper.Dtos.UserDto;
 import it.aulab.news_paper.Models.User;
+import it.aulab.news_paper.Models.Category;
+import it.aulab.news_paper.Repositories.CareerRequestRepository;
 import it.aulab.news_paper.services.ArticleService;
+import it.aulab.news_paper.services.CategoryService;
 
 
 
 @Controller
-
 public class UserController {
     @Autowired
     private UserService UserServices;
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CareerRequestRepository careerRequestRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/") 
         public String home(Model viewModel)
@@ -94,6 +102,15 @@ public class UserController {
         List<ArticleDto> articles = articleService.searchByAuthor(user);
         viewModel.addAttribute("articles", articles);
         return "article/articles";
+    }
+
+    @GetMapping("/admin/dashboard")
+    public String adminDashboard(Model viewModel) {
+        viewModel.addAttribute("title", "Receivied requests");
+        viewModel.addAttribute("requests", careerRequestRepository.findByIsCheckedFalse());
+        viewModel.addAttribute("categories", categoryService.readAll());
+        viewModel.addAttribute("category", new Category());
+        return "admin/dashboard";
     }
 }
 

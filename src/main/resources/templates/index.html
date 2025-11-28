@@ -32,6 +32,15 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/operations/career/request}">Career Request</a>
                     </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <div class="d-flex">
+                        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                        <div class="mt-1" th:if="${careerRequest > 0}">
+                            <i class="fas fa-bell fa-1 pt-2"></i>
+                            <span class="badge rounded-pill text-white px-1 bg-danger" th:text="${careerRequest}"></span>
+                        </div>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <!-- Dropdown menu for user access -->
