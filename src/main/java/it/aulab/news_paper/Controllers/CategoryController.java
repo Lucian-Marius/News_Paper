@@ -97,6 +97,13 @@ public class CategoryController {
     redirectAttributes.addFlashAttribute("successMessage", "Updated");
 
     return "redirect:/admin/dashboard";
-                                    }
+    }
+
+    @GetMapping("delete/{id}")
+    public String categoryDelete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        categoryService.delete(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Category deleted");
+        return "redirect:/admin/dashboard";
+    }
                                  
 }

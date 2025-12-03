@@ -67,6 +67,7 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
             User user = (userRepository.findById(userDetails.getId())).get();
             article.setUser(user);
+            article.setIsAccepted(null);
             System.out.println("[DEBUG] ArticleService: User set to " + user.getEmail());
         }
 
@@ -144,6 +145,12 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    public void setIsAccepted(Boolean result, Long id) {
+        Article article = articleRepository.findById(id).get();
+        article.setIsAccepted(result);
+        articleRepository.save(article);
     }
 
     @Override

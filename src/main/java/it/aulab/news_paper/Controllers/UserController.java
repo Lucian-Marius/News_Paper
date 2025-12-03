@@ -14,8 +14,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Comparator;
+import java.util.ArrayList;
+
+import org.modelmapper.ModelMapper;
 
 import it.aulab.news_paper.services.UserService;
+import it.aulab.news_paper.Repositories.ArticleRepository;
+import it.aulab.news_paper.Models.Article;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -23,9 +28,11 @@ import it.aulab.news_paper.Dtos.ArticleDto;
 import it.aulab.news_paper.Dtos.UserDto;
 import it.aulab.news_paper.Models.User;
 import it.aulab.news_paper.Models.Category;
+import it.aulab.news_paper.Repositories.ArticleRepository;
 import it.aulab.news_paper.Repositories.CareerRequestRepository;
 import it.aulab.news_paper.services.ArticleService;
 import it.aulab.news_paper.services.CategoryService;
+import it.aulab.news_paper.Repositories.ImageRepository;
 
 
 
@@ -36,6 +43,12 @@ public class UserController {
 
     @Autowired
     private ArticleService articleService;
+    
+    @Autowired
+    private ArticleRepository articleRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private CareerRequestRepository careerRequestRepository;
@@ -43,10 +56,20 @@ public class UserController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/") 
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @GetMapping("/")
         public String home(Model viewModel)
         {
-            List<ArticleDto> articles = articleService.readAll();
+            List<ArticleDto> articles = new ArrayList<ArticleDto>();
+            for(Article article: articleRepository.findByIsAcceptedTrue()){
+                ArticleDto dto = modelMapper.map(article, ArticleDto.class);
+                // Fetch and set image for this article
+                it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
+                dto.setImage(image);
+                articles.add(dto);
+            }
 
             Collections.sort(articles, Comparator.comparing(ArticleDto::getPublishDate).reversed());
 
@@ -111,6 +134,14 @@ public class UserController {
         viewModel.addAttribute("categories", categoryService.readAll());
         viewModel.addAttribute("category", new Category());
         return "admin/dashboard";
+    }
+
+    @GetMapping("/revisor/dashboard")
+    public String revisorDashboard(Model viewModel) {
+        viewModel.addAttribute("title", "Articles to review");
+        viewModel.addAttribute("articles", articleRepository.findByIsAcceptedIsNull());
+
+        return "revisor/dashboard";
     }
 }
 

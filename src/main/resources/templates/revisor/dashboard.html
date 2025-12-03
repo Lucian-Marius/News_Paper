@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{index :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisor Dashboard - News Paper</title>
+</head>
+<body>
+    <div th:replace="~{index :: nav}"></div>
+
+    <!-- Main Container -->
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3">
+                <div class="list-group sticky-top">
+                    <a href="#pending-articles-section" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                        📝 Pending Articles
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- Header -->
+                <div class="mb-4">
+                    <h1 class="mb-2">Revisor Dashboard</h1>
+                    <p class="text-muted">Review and manage pending articles</p>
+
+                    <!-- Success/Error Messages -->
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span th:text="${successMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span th:text="${errorMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <!-- Pending Articles Section -->
+                <div id="pending-articles-section" class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">📝 Pending Articles for Review</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${articles.size() > 0}">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Subtitle</th>
+                                            <th>Author</th>
+                                            <th>Category</th>
+                                            <th>Publish Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="article : ${articles}">
+                                            <td th:text="${article.title}">Article Title</td>
+                                            <td th:text="${article.subtitle}">Article Subtitle</td>
+                                            <td th:text="${article.user != null ? article.user.username : 'Unknown'}">Author Name</td>
+                                            <td><span th:if="${article.category != null}" th:text="${article.category.name}"></span><span th:unless="${article.category != null}">No Category</span></td>
+                                            <td th:text="${#temporals.format(article.publishDate, 'dd/MM/yyyy')}">01/01/2024</td>
+                                            <td>
+                                                <a th:href="@{/articles/revisor/detail/{id}(id=${article.id})}" class="btn btn-sm btn-info">
+                                                    👁 Details
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div th:if="${articles.size() == 0}" class="alert alert-info">
+                            ✓ No pending articles to review at the moment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{index :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.transaction.Transactional;
+
 import it.aulab.news_paper.Dtos.CategoryDto;
+import it.aulab.news_paper.Models.Article;
 import it.aulab.news_paper.Models.Category;
 import it.aulab.news_paper.Repositories.CategoryRepository;
 
@@ -58,8 +61,22 @@ public class CategoryService implements CrudService<CategoryDto, Category, Long>
     }
 
     @Override
-    public void delete(Long key){
+    @Transactional
+    public void delete(Long id){
+        if (categoryRepository.existsById(id)) {
+            Category category = categoryRepository.findById(id).get();
 
+            if (category.getArticles() != null) {
+                Iterable<Article> articles = category.getArticles();
+                    for (Article article: articles) {
+                        article.setCategory(null);
+                    }
+            }
+
+            categoryRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
