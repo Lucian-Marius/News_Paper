@@ -48,6 +48,7 @@ public class SecurityConfig
                 .requestMatchers("/article/detail/**").permitAll()
                 .requestMatchers("/operations/career/request/detail/**").permitAll()
                 .requestMatchers("/admin/dashboard").hasRole("ADMIN")
+                .requestMatchers("/revisor/dashboard").hasRole("REVISOR")
                 .requestMatchers("/categories/create", "/categories/edit/{id}", "/categories/update/{id}", "/categories/delete/{id}").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

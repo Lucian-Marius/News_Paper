@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Set;
+import java.util.HashSet;
 import org.springframework.web.multipart.MultipartFile;
 
 import org.modelmapper.ModelMapper;
@@ -55,20 +57,44 @@ public class ArticleController {
     private ImageRepository imageRepository;
 
     @GetMapping
-    private String articlesIndex(Model viewModel) {
+    private String articlesIndex(@RequestParam(value = "q", required = false) String query, Model viewModel) {
+        System.out.println("[DEBUG] ArticleController: articlesIndex called with query: " + query);
         viewModel.addAttribute("title", "All articles");
 
+        List<Article> articleEntities;
+        if (query != null && !query.trim().isEmpty()) {
+            System.out.println("[DEBUG] ArticleController: Performing search for query: " + query);
+            // Search by title, body, or author username
+            List<Article> byTitle = articleRepository.findByTitleContainingIgnoreCaseAndIsAcceptedTrue(query);
+            List<Article> byBody = articleRepository.findByBodyContainingIgnoreCaseAndIsAcceptedTrue(query);
+            List<Article> byAuthor = articleRepository.findByUser_UsernameContainingIgnoreCaseAndIsAcceptedTrue(query);
+
+            System.out.println("[DEBUG] ArticleController: byTitle: " + byTitle.size() + ", byBody: " + byBody.size() + ", byAuthor: " + byAuthor.size());
+
+            // Combine and remove duplicates
+            Set<Article> combined = new HashSet<>();
+            combined.addAll(byTitle);
+            combined.addAll(byBody);
+            combined.addAll(byAuthor);
+            articleEntities = new ArrayList<>(combined);
+            System.out.println("[DEBUG] ArticleController: Combined search results: " + articleEntities.size());
+        } else {
+            articleEntities = articleRepository.findByIsAcceptedTrue();
+            System.out.println("[DEBUG] ArticleController: Showing all articles: " + articleEntities.size());
+        }
+
         List<ArticleDto> articles = new ArrayList<ArticleDto>();
-            for(Article article: articleRepository.findByIsAcceptedTrue()) {
-                ArticleDto dto = modelMapper.map(article, ArticleDto.class);
-                // Fetch and set image for this article
-                it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
-                dto.setImage(image);
-                articles.add(dto);
-            }
+        for(Article article: articleEntities) {
+            ArticleDto dto = modelMapper.map(article, ArticleDto.class);
+            // Fetch and set image for this article
+            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
+            dto.setImage(image);
+            articles.add(dto);
+        }
 
         Collections.sort(articles, Comparator.comparing(ArticleDto::getPublishDate).reversed());
         viewModel.addAttribute("articles", articles);
+        viewModel.addAttribute("query", query); // To display in the search box
 
         return "article/articles";
     }

@@ -14,6 +14,15 @@
                 </div>
             </div>
             <div class="container mt-4">
+                <!-- Search Form -->
+                <div class="row justify-content-center mb-4">
+                    <div class="col-10 col-md-6">
+                        <form th:action="@{/articles}" method="get" class="d-flex">
+                            <input type="text" name="q" class="form-control me-2" placeholder="Search by title, content, or author..." th:value="${query}">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
                 <p th:text="'Articles found: ' + ${articles.size()}"></p>
                 <div class="row justify-content-center">
                     <div class="col-10 col-md-4 offset justify-content-center">

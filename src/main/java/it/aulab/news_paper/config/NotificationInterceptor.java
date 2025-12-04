@@ -1,5 +1,6 @@
 package it.aulab.news_paper.config;
 
+import it.aulab.news_paper.Repositories.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,9 @@ public class NotificationInterceptor implements HandlerInterceptor {
     @Autowired
     CareerRequestRepository careerRequestRepository;
 
+    @Autowired
+    ArticleRepository articleRepository;
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
     throws Exception {
@@ -25,6 +29,13 @@ public class NotificationInterceptor implements HandlerInterceptor {
             int careerCount = careerRequestRepository.findByIsCheckedFalse().size();
             modelAndView.addObject("careerRequest", careerCount);
         }
+
+        if (modelAndView != null && request.isUserInRole("ROLE_REVISOR")) {
+            int revisedCount = articleRepository.findByIsAcceptedIsNull().size();
+            modelAndView.addObject("articlesToBeRevised", revisedCount);
+        }
     }
+
+    
 
 }
