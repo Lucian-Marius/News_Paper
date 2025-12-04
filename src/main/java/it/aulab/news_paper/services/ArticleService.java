@@ -50,8 +50,10 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
             for (Article article : articleRepository.findAll()) {
                 ArticleDto dto = modelMapper.map(article, ArticleDto.class);
                 // Fetch and set image for this article
-                it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
-                dto.setImage(image);
+                List<it.aulab.news_paper.Models.Image> images = imageRepository.findByArticleId(article.getId());
+                if (!images.isEmpty()) {
+                    dto.setImage(images.get(0)); // Take the first image if multiple exist
+                }
                 dtos.add(dto);
             }
             return dtos;
@@ -103,15 +105,61 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
   
 
     @Override
-    public ArticleDto update(Long id, Article article, MultipartFile file) {
-        // TODO: Implement update method
-        throw new UnsupportedOperationException("Not implemented yet");
+    public ArticleDto update(Long id, Article updatedArticle, MultipartFile file) {
+        if (articleRepository.existsById(id)) {
+            Article existingArticle = articleRepository.findById(id).get();
+            updatedArticle.setId(id);
+            updatedArticle.setUser(existingArticle.getUser());
+
+            if (!file.isEmpty()) {
+                try {
+                    // Delete existing images for this article before uploading new one
+                    List<it.aulab.news_paper.Models.Image> existingImages = imageRepository.findByArticleId(id);
+                    for (it.aulab.news_paper.Models.Image existingImage : existingImages) {
+                        imageService.deleteImage(existingImage.getPath());
+                    }
+
+                    CompletableFuture<String> futureUrl = imageService.saveImageOnCloud(file);
+                    String url = futureUrl.get();
+                    imageService.saveImageOnDB(url, updatedArticle);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (!updatedArticle.equals(existingArticle)) {
+                updatedArticle.setIsAccepted(null);
+            } else {
+                updatedArticle.setIsAccepted(existingArticle.getIsAccepted());
+            }
+
+            return modelMapper.map(articleRepository.save(updatedArticle), ArticleDto.class);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Article " + id + " not found");
+        }
     }
 
     @Override
-    public void delete(Long id) {
-        // TODO: Implement delete method
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void delete(Long key) {
+        if (articleRepository.existsById(key)) {
+            // Delete associated images first
+            List<it.aulab.news_paper.Models.Image> existingImages = imageRepository.findByArticleId(key);
+            for (it.aulab.news_paper.Models.Image existingImage : existingImages) {
+                try {
+                    imageService.deleteImage(existingImage.getPath());
+                    // Delete the image record from database
+                    imageRepository.delete(existingImage);
+                } catch (Exception e) {
+                    // Log the error but continue with article deletion
+                    System.err.println("Error deleting image: " + existingImage.getPath());
+                }
+            }
+
+            // Delete the article
+            articleRepository.deleteById(key);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Article " + key + " not found");
+        }
     }
 
     @Override
@@ -127,8 +175,10 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
         for(Article article : articleRepository.findByCategory(category)) {
             ArticleDto dto = modelMapper.map(article, ArticleDto.class);
             // Fetch and set image for this article
-            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
-            dto.setImage(image);
+            List<it.aulab.news_paper.Models.Image> images = imageRepository.findByArticleId(article.getId());
+            if (!images.isEmpty()) {
+                dto.setImage(images.get(0)); // Take the first image if multiple exist
+            }
             dtos.add(dto);
         }
         return dtos;
@@ -140,8 +190,10 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
         for(Article article : articleRepository.findByUser(user)) {
             ArticleDto dto = modelMapper.map(article, ArticleDto.class);
             // Fetch and set image for this article
-            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
-            dto.setImage(image);
+            List<it.aulab.news_paper.Models.Image> images = imageRepository.findByArticleId(article.getId());
+            if (!images.isEmpty()) {
+                dto.setImage(images.get(0)); // Take the first image if multiple exist
+            }
             dtos.add(dto);
         }
         return dtos;
@@ -153,13 +205,23 @@ public class ArticleService implements CrudService<ArticleDto, Article, Long> {
         articleRepository.save(article);
     }
 
+    public List<ArticleDto> search(String searchTerm) {
+        List<ArticleDto> dtos = new ArrayList<ArticleDto>();
+        for(Article article : articleRepository.searchArticles(searchTerm)) {
+            dtos.add(modelMapper.map(article, ArticleDto.class));
+        }
+        return dtos;
+    }
+
     @Override
     public ArticleDto read(Long key) {
         Optional<Article> optArticle = articleRepository.findById(key);
         if (optArticle.isPresent()) {
             ArticleDto dto = modelMapper.map(optArticle.get(), ArticleDto.class);
-            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(optArticle.get().getId());
-            dto.setImage(image);
+            List<it.aulab.news_paper.Models.Image> images = imageRepository.findByArticleId(optArticle.get().getId());
+            if (!images.isEmpty()) {
+                dto.setImage(images.get(0)); // Take the first image if multiple exist
+            }
             return dto;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article " + key + " not found");

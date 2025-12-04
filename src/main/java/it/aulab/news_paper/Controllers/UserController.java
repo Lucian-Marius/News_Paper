@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Comparator;
 import java.util.ArrayList;
+import java.security.Principal;
 
 import org.modelmapper.ModelMapper;
 
@@ -66,8 +67,10 @@ public class UserController {
             for(Article article: articleRepository.findByIsAcceptedTrue()){
                 ArticleDto dto = modelMapper.map(article, ArticleDto.class);
                 // Fetch and set image for this article
-                it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
-                dto.setImage(image);
+                List<it.aulab.news_paper.Models.Image> images = imageRepository.findByArticleId(article.getId());
+                if (!images.isEmpty()) {
+                    dto.setImage(images.get(0)); // Take the first image if multiple exist
+                }
                 articles.add(dto);
             }
 
@@ -142,6 +145,19 @@ public class UserController {
         viewModel.addAttribute("articles", articleRepository.findByIsAcceptedIsNull());
 
         return "revisor/dashboard";
+    }
+
+    @GetMapping("/writer/dashboard")
+    public String writerDashboard(Model viewModel, Principal principal) {
+        viewModel.addAttribute("title", "Your articles");
+
+        List<ArticleDto> userArticles = articleService.readAll().
+                                                        stream().
+                                                        filter(article -> article.getUser().getEmail().equals(principal.getName())).toList();
+        
+        viewModel.addAttribute("articles", userArticles);
+    
+        return "writer/dashboard";
     }
 }
 

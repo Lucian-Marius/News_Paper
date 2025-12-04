@@ -50,6 +50,9 @@
                         </div>
                         </div>
                     </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ROLE_USER')">
+                        <a class="nav-link" href="/writer/dashboard">Writer Dashboard</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <!-- Dropdown menu for user access -->

@@ -2,6 +2,7 @@ package it.aulab.news_paper.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,6 +57,16 @@ public class ArticleController {
     @Autowired
     private ImageRepository imageRepository;
 
+    @GetMapping("/search")
+    public String articleSearch(@RequestParam("keyword") String keyword, Model viewModel) {
+        viewModel.addAttribute("title", "Search results for: " + keyword);
+        List<ArticleDto> articles = articleService.search(keyword);
+
+        viewModel.addAttribute("articles", articles);
+
+        return "article/articles";
+    }
+
     @GetMapping
     private String articlesIndex(@RequestParam(value = "q", required = false) String query, Model viewModel) {
         System.out.println("[DEBUG] ArticleController: articlesIndex called with query: " + query);
@@ -64,17 +75,15 @@ public class ArticleController {
         List<Article> articleEntities;
         if (query != null && !query.trim().isEmpty()) {
             System.out.println("[DEBUG] ArticleController: Performing search for query: " + query);
-            // Search by title, body, or author username
+            // Search by title or author username
             List<Article> byTitle = articleRepository.findByTitleContainingIgnoreCaseAndIsAcceptedTrue(query);
-            List<Article> byBody = articleRepository.findByBodyContainingIgnoreCaseAndIsAcceptedTrue(query);
             List<Article> byAuthor = articleRepository.findByUser_UsernameContainingIgnoreCaseAndIsAcceptedTrue(query);
 
-            System.out.println("[DEBUG] ArticleController: byTitle: " + byTitle.size() + ", byBody: " + byBody.size() + ", byAuthor: " + byAuthor.size());
+            System.out.println("[DEBUG] ArticleController: byTitle: " + byTitle.size() + ", byAuthor: " + byAuthor.size());
 
             // Combine and remove duplicates
             Set<Article> combined = new HashSet<>();
             combined.addAll(byTitle);
-            combined.addAll(byBody);
             combined.addAll(byAuthor);
             articleEntities = new ArrayList<>(combined);
             System.out.println("[DEBUG] ArticleController: Combined search results: " + articleEntities.size());
@@ -87,8 +96,10 @@ public class ArticleController {
         for(Article article: articleEntities) {
             ArticleDto dto = modelMapper.map(article, ArticleDto.class);
             // Fetch and set image for this article
-            it.aulab.news_paper.Models.Image image = imageRepository.findByArticleId(article.getId());
-            dto.setImage(image);
+            List<it.aulab.news_paper.Models.Image> images = imageRepository.findByArticleId(article.getId());
+            if (!images.isEmpty()) {
+                dto.setImage(images.get(0)); // Take the first image if multiple exist
+            }
             articles.add(dto);
         }
 
@@ -179,6 +190,45 @@ public class ArticleController {
 
         return "redirect:/revisor/dashboard";
     }
-    
-    
+
+    @GetMapping("/edit/{id}")
+    public String editArticle(@PathVariable("id")Long id, Model viewModel, Principal principal) {
+        ArticleDto article = articleService.read(id);
+        if (!article.getUser().getEmail().equals(principal.getName())) {
+            return "redirect:/writer/dashboard";
+        }
+        viewModel.addAttribute("title", "Article update");
+        viewModel.addAttribute("article", article);
+        viewModel.addAttribute("categories", categoryService.readAll());
+        return "article/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String articleUpdate(@PathVariable("id")Long id,
+                                @Valid @ModelAttribute("article") Article article,
+                                BindingResult result,
+                                RedirectAttributes redirectAttributes,
+                                Principal principal,
+                                MultipartFile file,
+                                Model viewModel) {
+        if (result.hasErrors()) {
+            viewModel.addAttribute("title", "Article update");
+            viewModel.addAttribute("article", article);
+            viewModel.addAttribute("categories", categoryService.readAll());
+            return "article/edit";
+        }
+
+        articleService.update(id, article, file);
+        redirectAttributes.addFlashAttribute("successMessage", "Article updated");
+        return "redirect:/articles";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String articleDelete(@PathVariable("id")Long id, RedirectAttributes redirectAttributes) {
+
+        articleService.delete(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Article deleted");
+
+        return "redirect:/writer/dashboard";
+    }
 }

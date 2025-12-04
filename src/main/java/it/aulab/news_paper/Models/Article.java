@@ -64,5 +64,17 @@ public class Article {
     @JsonIgnoreProperties({"articles"})
     private Category category;
 
-    // ...existing code...
+    @Override
+    public boolean equals(Object obj) {
+        Article article = (Article) obj;
+
+        if(title.equals(article.getTitle()) &&
+           subtitle.equals(article.getSubtitle()) &&
+           body.equals(article.getBody()) &&
+           publishDate.equals(article.getPublishDate()) &&
+           category.equals(article.getCategory())) {
+           return true;
+        }
+        return false;
+    }
 }
