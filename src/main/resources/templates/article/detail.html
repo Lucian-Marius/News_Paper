@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{index :: head}"></head>
 <body>
+    <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
     <div class="m-3">
         <div class="container">
@@ -42,7 +43,7 @@
 
                         <!-- Category & Author Tags -->
                         <div class="row mb-4">
-                            <div class="col-auto">
+                            <div class="col-auto" th:if="${article.category != null}">
                                 <a class="badge rounded-pill text-bg-primary" th:href="@{/categories/search/{id}(id=${article.category.id})}" th:text="${article.category.name}">Category</a>
                             </div>
                         </div>

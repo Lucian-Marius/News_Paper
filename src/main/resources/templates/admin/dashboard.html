@@ -6,28 +6,14 @@
     <title>Admin Dashboard - News Paper</title>
 </head>
 <body>
+    <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
 
     <!-- Main Container -->
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <!-- Sidebar Navigation -->
-            <div class="col-md-3">
-                <div class="list-group sticky-top">
-                    <a href="#requests-section" class="list-group-item list-group-item-action active" data-bs-toggle="list">
-                        📋 Career Requests
-                    </a>
-                    <a href="#categories-section" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                        📂 Manage Categories
-                    </a>
-                    <a href="#articles-section" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                        📰 All Articles
-                    </a>
-                </div>
-            </div>
-
+    <div class="container mt-5">
+        <div class="row justify-content-center">
             <!-- Main Content -->
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <!-- Header -->
                 <div class="mb-4">
                     <h1 class="mb-2">Admin Dashboard</h1>
@@ -131,35 +117,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="my-4">
-                            <h6>Table View</h6>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Number of Articles</th>
-                                            <th>Actions</th>
-                                            <th>
-                                                <a th:href="@{/categories/create}" class="btn btn-sm btn-success text-white">
-                                                    ➕
-                                                </a>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="category : ${categories}">
-                                            <td th:text="${category.name}">Category Name</td>
-                                            <td th:text="${category.numberOfArticles}">0</td>
-                                            <td>
-                                                <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-sm btn-warning">Edit</a>
-                                                <a th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure you want to delete this category?')" class="btn btn-sm btn-danger">Delete</a>
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+
                         </div>
                         <div th:if="${categories.size() == 0}" class="alert alert-info">
                             No categories available.
@@ -167,34 +125,7 @@
                     </div>
                 </div>
 
-                <!-- Articles Section -->
-                <div id="articles-section" class="card mb-4">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">📰 All Articles</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>Category</th>
-                                        <th>Publish Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted py-4">
-                                            No articles to display. Articles management coming soon.
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

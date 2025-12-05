@@ -5,6 +5,7 @@
     <title>Home Page</title>
 </head>
 <body>
+    <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
 
     <div th:if="${param.notAuthorized}">
@@ -29,16 +30,18 @@
                 </div>
             </div>
             <div class="container" th:if="${articles.size() > 0}">
-                <div class="row justify-content-center mb-5">
-                    <div th:each="article:${articles}" class="col-10 col-md-4 d-flex justify-content-center">
-                        <div class="card-body">
-                            <img th:if="${article.image != null}" th:src="${article.image.path}" class="card-img-top" alt="...">
-                            <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="card-img-top" alt="...">
+                <div class="row">
+                    <div th:each="article:${articles}" class="col-md-4 mb-4">
+                        <div class="card h-100 d-flex flex-column" style="height: 700px;">
+                            <img th:if="${article.image != null}" th:src="${article.image.path}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
+                            <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${article.title}"></h5>
                                 <p class="card-text" th:text="${article.subtitle}"></p>
                                 <p class="card-text" th:text="${article.user.username}"></p>
-                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-primary">Leggi</a>
+                            </div>
+                            <div class="card-footer">
+                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-dark">Leggi</a>
                             </div>
                         </div>
                     </div>

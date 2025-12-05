@@ -1,11 +1,8 @@
-# TODO: Implement Search Fields on Articles Page
-
-## Completed Tasks
-- [x] Add search methods to ArticleRepository for title, body, and username with isAcceptedTrue
-- [x] Update ArticleController articlesIndex to handle search query parameter
-- [x] Add search form to articles.html template
-- [x] Fix compilation errors (missing imports and repository methods)
-- [x] Add missing imports for Set and HashSet
-
-## Followup Steps
-- [ ] Test the search functionality
+- [x] Add Viaoda Libre font links and CSS class to index.html head fragment.
+- [x] Apply the font class to body or html in index.html.
+- [x] Change "read" buttons to darker grey (btn-dark) in home.html and articles.html.
+- [x] Set black and white theme: change navbar and header to black/white, add custom CSS for black and white.
+- [x] Make footer sticky: add position: fixed; bottom: 0; to footer in index.html.
+- [x] Eliminate pending articles button from revisor dashboard and center the page content, apply black and white theme.
+- [x] Eliminate my articles button from the Writers dashboard and center the page content, apply black and white theme.
+- [x] Center the dashboard page content and apply black and white theme.

@@ -6,22 +6,14 @@
     <title>Writer Dashboard - News Paper</title>
 </head>
 <body>
+    <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
 
     <!-- Main Container -->
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <!-- Sidebar Navigation -->
-            <div class="col-md-3">
-                <div class="list-group sticky-top">
-                    <a href="#my-articles-section" class="list-group-item list-group-item-action active" data-bs-toggle="list">
-                        📝 My Articles
-                    </a>
-                </div>
-            </div>
-
+    <div class="container mt-5">
+        <div class="row justify-content-center">
             <!-- Main Content -->
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <!-- Header -->
                 <div class="mb-4">
                     <h1 class="mb-2">Writer Dashboard</h1>
