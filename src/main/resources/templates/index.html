@@ -13,13 +13,18 @@
     <header th:fragment="header" class="site-header">
         <h1 class="site-header__title">Welcome to news-paper</h1>
         <p class="site-header__subtitle">Your one-stop solution for the latest news articles.</p>
+        <span sec:authorize="isAuthenticated()" class="site-header__user-info">
+            Welcome: <span th:text="${#authentication.principal.fullName}"></span>
+            (<span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}" th:text="'ADMIN'"></span>
+            <span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() == 0 and #authentication.principal.authorities.?[authority == 'ROLE_REVISOR'].size() > 0}" th:text="'REVISOR'"></span>
+            <span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() == 0 and #authentication.principal.authorities.?[authority == 'ROLE_REVISOR'].size() == 0}" th:text="'USER'"></span>)
+        </span>
     </header>
     
     <nav th:fragment="nav" class="site-nav">
         <div class="site-nav__container">
-            <a class="site-nav__brand" href="/">📰 News Paper</a>
             <button class="site-nav__toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span>☰</span>
+                <span>Menu</span>
             </button>
             <div class="site-nav__collapse" id="navbarNav">
                 <ul class="site-nav__list">
@@ -39,7 +44,6 @@
                         <div class="site-nav__notification-wrapper">
                             <a class="site-nav__link" href="/admin/dashboard">Dashboard</a>
                             <div class="site-nav__notification" th:if="${careerRequest > 0}">
-                                <i class="fas fa-bell fa-1"></i>
                                 <span class="site-nav__badge" th:text="${careerRequest}"></span>
                             </div>
                         </div>
@@ -48,7 +52,6 @@
                         <div class="site-nav__notification-wrapper">
                             <a class="site-nav__link" href="/revisor/dashboard">Revisor Dashboard</a>
                             <div class="site-nav__notification" th:if="${articlesToBeRevised > 0}">
-                                <i class="fas fa-bell fa-1"></i>
                                 <span class="site-nav__badge" th:text="${articlesToBeRevised}"></span>
                             </div>
                         </div>
@@ -58,30 +61,16 @@
                     </li>
                 </ul>
                 <ul class="site-nav__list">
-                    <li class="site-nav__item site-nav__dropdown">
-                        <a class="site-nav__dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Login
-                        </a>
-                        <ul class="site-nav__dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li sec:authorize="isAnonymous()">
-                                <a class="site-nav__dropdown-item" th:href="@{/auth/register}">Register</a>
-                            </li>
-                            <li sec:authorize="isAnonymous()">
-                                <a class="site-nav__dropdown-item" th:href="@{/auth/login}">Login</a>
-                            </li>
-                            <li sec:authorize="isAuthenticated()">
-                                <a class="site-nav__dropdown-item" th:href="@{/logout}">Logout</a>
-                            </li>
-                        </ul>
+                    <li class="site-nav__item" sec:authorize="isAnonymous()">
+                        <a class="site-nav__link" th:href="@{/auth/register}">Register</a>
+                    </li>
+                    <li class="site-nav__item" sec:authorize="isAnonymous()">
+                        <a class="site-nav__link" th:href="@{/auth/login}">Login</a>
+                    </li>
+                    <li class="site-nav__item" sec:authorize="isAuthenticated()">
+                        <a class="site-nav__link" th:href="@{/logout}">Logout</a>
                     </li>
                 </ul>
-                <span sec:authorize="isAuthenticated()" class="site-nav__user-info">
-                    Welcome: <span th:text="${#authentication.principal.fullName}"></span>
-                    (<span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}" th:text="'ADMIN'"></span>
-                    <span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() == 0 and #authentication.principal.authorities.?[authority == 'ROLE_REVISOR'].size() > 0}" th:text="'REVISOR'"></span>
-                    <span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() == 0 and #authentication.principal.authorities.?[authority == 'ROLE_REVISOR'].size() == 0}" th:text="'USER'"></span>)
-                </span>
             </div>
         </div>
     </nav>

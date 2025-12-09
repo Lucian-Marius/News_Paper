@@ -17,6 +17,14 @@
 
 .site-header__subtitle {
     font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-md);
+}
+
+.site-header__user-info {
+    display: block;
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-md);
+    font-style: italic;
 }
 
 /* ============================================
@@ -82,6 +90,7 @@
     color: var(--color-text-inverse);
     padding: var(--spacing-md);
     transition: background-color var(--transition-fast);
+    white-space: nowrap;
 }
 
 .site-nav__link:hover {

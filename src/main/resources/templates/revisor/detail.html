@@ -23,7 +23,7 @@
                         </li>
                         <li class="sidebar-nav__item">
                             <a href="#article-details" class="sidebar-nav__link sidebar-nav__link--active">
-                                📄 Article Details
+                                Article Details
                             </a>
                         </li>
                     </ul>
@@ -40,7 +40,7 @@
                     <!-- Article Details Section -->
                     <div id="article-details" class="dashboard-card">
                         <div class="dashboard-card__header dashboard-card__header--info">
-                            <h5 class="dashboard-card__title">📄 Article Details</h5>
+                            <h5 class="dashboard-card__title">Article Details</h5>
                         </div>
                         <div class="dashboard-card__body">
                             <!-- Article Image -->
@@ -78,8 +78,8 @@
                                 <div class="review-detail__metadata-item">
                                     <strong>Status:</strong>
                                     <span th:if="${article.isAccepted == null}" class="badge badge--warning">Pending Review</span>
-                                    <span th:if="${article.isAccepted == true}" class="badge badge--success">✓ Accepted</span>
-                                    <span th:if="${article.isAccepted == false}" class="badge badge--danger">✕ Rejected</span>
+                                    <span th:if="${article.isAccepted == true}" class="badge badge--success">Accepted</span>
+                                    <span th:if="${article.isAccepted == false}" class="badge badge--danger">Rejected</span>
                                 </div>
                             </div>
 
@@ -96,14 +96,14 @@
                                 <form th:action="@{/articles/revisor/handle/{id}(id=${article.id})}" method="post">
                                     <input type="hidden" name="action" value="accept">
                                     <button type="submit" class="button button--success">
-                                        ✓ Accept Article
+                                        Accept Article
                                     </button>
                                 </form>
 
                                 <form th:action="@{/articles/revisor/handle/{id}(id=${article.id})}" method="post">
                                     <input type="hidden" name="action" value="reject">
                                     <button type="submit" class="button button--danger">
-                                        ✕ Reject Article
+                                        Reject Article
                                     </button>
                                 </form>
                             </div>

@@ -32,8 +32,8 @@
 
                 <!-- Pending Articles Section -->
                 <div id="pending-articles-section" class="dashboard-card">
-                    <div class="dashboard-card__header dashboard-card__header--warning">
-                        <h5 class="dashboard-card__title">📝 Pending Articles for Review</h5>
+                    <div class="dashboard-card__header">
+                        <h5 class="dashboard-card__title">Pending Articles for Review</h5>
                     </div>
                     <div class="dashboard-card__body">
                         <div th:if="${articles.size() > 0}">
@@ -58,7 +58,7 @@
                                             <td class="data-table__cell" th:text="${#temporals.format(article.publishDate, 'dd/MM/yyyy')}">01/01/2024</td>
                                             <td class="data-table__cell">
                                                 <a th:href="@{/articles/revisor/detail/{id}(id=${article.id})}" class="button button--info button--small">
-                                                    👁 Details
+                                                    Details
                                                 </a>
                                             </td>
                                         </tr>
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div th:if="${articles.size() == 0}" class="alert alert--info">
-                            ✓ No pending articles to review at the moment.
+                            No pending articles to review at the moment.
                         </div>
                     </div>
                 </div>

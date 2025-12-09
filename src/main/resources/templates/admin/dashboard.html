@@ -23,7 +23,7 @@
                 <!-- Career Requests Section -->
                 <div id="requests-section" class="dashboard-card">
                     <div class="dashboard-card__header">
-                        <h5 class="dashboard-card__title">📋 Pending Career Requests</h5>
+                        <h5 class="dashboard-card__title">Pending Career Requests</h5>
                     </div>
                     <div class="dashboard-card__body">
                         <div th:if="${requests.size() > 0}">
@@ -71,11 +71,11 @@
                                                         th:data-request-id="${request.id}"
                                                         th:data-user-id="${request.user.id}"
                                                         th:data-role-id="${request.role.id}">
-                                                    ✓ Approve
+                                                    Approve
                                                 </button>
-                                                <button class="button button--danger button--small">✕ Reject</button>
+                                                <button class="button button--danger button--small">Reject</button>
                                                 <a th:href="@{/operations/career/request/detail/{id}(id=${request.id})}" class="button button--info button--small">
-                                                    👁 View
+                                                    View
                                                 </a>
                                             </td>
                                         </tr>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div th:if="${requests.size() == 0}" class="alert alert--info">
-                            ✓ No pending career requests at the moment.
+                            No pending career requests at the moment.
                         </div>
                     </div>
                 </div>
@@ -92,12 +92,12 @@
                 <!-- Categories Section -->
                 <div id="categories-section" class="dashboard-card">
                     <div class="dashboard-card__header dashboard-card__header--success">
-                        <h5 class="dashboard-card__title">📂 Manage Categories</h5>
+                        <h5 class="dashboard-card__title">Manage Categories</h5>
                     </div>
                     <div class="dashboard-card__body">
                         <div>
                             <button class="button button--success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                                ➕ Add New Category
+                                Add New Category
                             </button>
                         </div>
                         <div th:if="${categories.size() > 0}">
@@ -142,7 +142,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success">✓ Approve</button>
+                    <button type="button" class="btn btn-success">Approve</button>
                 </div>
             </div>
         </div>
@@ -183,7 +183,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">➕ Add Category</button>
+                        <button type="submit" class="btn btn-success">Add Category</button>
                     </div>
                 </form>
             </div>
@@ -210,7 +210,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-warning">✏ Update Category</button>
+                        <button type="submit" class="btn btn-warning">Update Category</button>
                     </div>
                 </form>
             </div>
