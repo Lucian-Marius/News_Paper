@@ -490,6 +490,7 @@
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     overflow: hidden;
+    margin-top: var(--spacing-lg);
 }
 
 .form-card__header {
