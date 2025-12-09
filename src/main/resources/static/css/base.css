@@ -24,14 +24,17 @@ h1, h2, h3, h4, h5, h6 {
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--spacing-md);
+    font-family: var(--font-family-heading);
 }
 
 h1 {
     font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-black);
 }
 
 h2 {
     font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
 }
 
 h3 {
