@@ -688,6 +688,11 @@
 .dashboard-card__header--success {
     background-color: var(--color-success);
     color: var(--color-text-inverse);
+
+.dashboard-card__header--info {
+    background-color: var(--color-info);
+    color: var(--color-text-inverse);
+}
 }
 
 .dashboard-card__title {

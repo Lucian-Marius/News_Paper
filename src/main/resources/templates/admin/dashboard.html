@@ -10,62 +10,62 @@
     <div th:replace="~{index :: nav}"></div>
 
     <!-- Main Container -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
+    <div class="dashboard-container">
+        <div class="page-container">
             <!-- Main Content -->
-            <div class="col-md-8">
+            <div class="dashboard-content">
                 <!-- Header -->
-                <div class="mb-4">
-                    <h1 class="mb-2">Admin Dashboard</h1>
+                <div>
+                    <h1>Admin Dashboard</h1>
                     <p class="text-muted">Welcome to the administration panel</p>
                 </div>
 
                 <!-- Career Requests Section -->
-                <div id="requests-section" class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">📋 Pending Career Requests</h5>
+                <div id="requests-section" class="dashboard-card">
+                    <div class="dashboard-card__header">
+                        <h5 class="dashboard-card__title">📋 Pending Career Requests</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="dashboard-card__body">
                         <div th:if="${requests.size() > 0}">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>User</th>
-                                            <th>Role Requested</th>
-                                            <th>Reason</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
+                            <div class="data-table-wrapper">
+                                <table class="data-table">
+                                    <thead class="data-table__header">
+                                        <tr class="data-table__row">
+                                            <th class="data-table__header-cell">User</th>
+                                            <th class="data-table__header-cell">Role Requested</th>
+                                            <th class="data-table__header-cell">Reason</th>
+                                            <th class="data-table__header-cell">Status</th>
+                                            <th class="data-table__header-cell">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="request : ${requests}">
-                                            <td>
+                                        <tr class="data-table__row" th:each="request : ${requests}">
+                                            <td class="data-table__cell">
                                                 <strong th:text="${request.user.username}">User Name</strong>
                                                 <br>
                                                 <small class="text-muted" th:text="${request.user.email}">user@email.com</small>
                                             </td>
-                                            <td>
-                                                <span class="badge rounded-pill text-bg-info" 
+                                            <td class="data-table__cell">
+                                                <span class="badge badge--info" 
                                                       th:text="${#strings.substring(request.role.name, 5)}">
                                                     WRITER
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td class="data-table__cell">
                                                 <small th:text="${#strings.abbreviate(request.body, 50)}">Request reason here...</small>
                                             </td>
-                                            <td>
-                                                <span class="badge rounded-pill text-bg-warning" 
+                                            <td class="data-table__cell">
+                                                <span class="badge badge--warning" 
                                                       th:if="${!request.isChecked}">
                                                     Pending
                                                 </span>
-                                                <span class="badge rounded-pill text-bg-success" 
+                                                <span class="badge badge--success" 
                                                       th:if="${request.isChecked}">
                                                     Approved
                                                 </span>
                                             </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-success" 
+                                            <td class="data-table__cell">
+                                                <button class="button button--success button--small" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#approveModal"
                                                         th:data-request-id="${request.id}"
@@ -73,8 +73,8 @@
                                                         th:data-role-id="${request.role.id}">
                                                     ✓ Approve
                                                 </button>
-                                                <button class="btn btn-sm btn-danger">✕ Reject</button>
-                                                <a th:href="@{/operations/career/request/detail/{id}(id=${request.id})}" class="btn btn-sm btn-info">
+                                                <button class="button button--danger button--small">✕ Reject</button>
+                                                <a th:href="@{/operations/career/request/detail/{id}(id=${request.id})}" class="button button--info button--small">
                                                     👁 View
                                                 </a>
                                             </td>
@@ -83,43 +83,41 @@
                                 </table>
                             </div>
                         </div>
-                        <div th:if="${requests.size() == 0}" class="alert alert-info">
+                        <div th:if="${requests.size() == 0}" class="alert alert--info">
                             ✓ No pending career requests at the moment.
                         </div>
                     </div>
                 </div>
 
                 <!-- Categories Section -->
-                <div id="categories-section" class="card mb-4">
-                    <div class="card-header bg-success text-white">
-                        <h5 class="mb-0">📂 Manage Categories</h5>
+                <div id="categories-section" class="dashboard-card">
+                    <div class="dashboard-card__header dashboard-card__header--success">
+                        <h5 class="dashboard-card__title">📂 Manage Categories</h5>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <div class="dashboard-card__body">
+                        <div>
+                            <button class="button button--success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                                 ➕ Add New Category
                             </button>
                         </div>
                         <div th:if="${categories.size() > 0}">
-                            <div class="row">
-                                <div th:each="category : ${categories}" class="col-md-6 col-lg-4 mb-3">
-                                    <div class="card border-success h-100">
-                                        <div class="card-body">
-                                            <h6 class="card-title" th:text="${category.name}">Category Name</h6>
-                                            <p class="card-text text-muted">
-                                                Articles: <strong th:text="${category.numberOfArticles}">0</strong>
-                                            </p>
-                                        </div>
-                                        <div class="card-footer bg-light">
-                                            <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-sm btn-warning">Edit</a>
-                                            <a th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure you want to delete this category?')" class="btn btn-sm btn-danger">Delete</a>
-                                        </div>
+                            <div class="category-grid">
+                                <div th:each="category : ${categories}" class="category-card">
+                                    <div class="category-card__body">
+                                        <h6 class="category-card__title" th:text="${category.name}">Category Name</h6>
+                                        <p class="category-card__text">
+                                            Articles: <strong th:text="${category.numberOfArticles}">0</strong>
+                                        </p>
+                                    </div>
+                                    <div class="category-card__footer">
+                                        <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="button button--warning button--small">Edit</a>
+                                        <a th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure you want to delete this category?')" class="button button--danger button--small">Delete</a>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                        <div th:if="${categories.size() == 0}" class="alert alert-info">
+                        <div th:if="${categories.size() == 0}" class="alert alert--info">
                             No categories available.
                         </div>
                     </div>
@@ -178,9 +176,9 @@
                 </div>
                 <form method="POST" th:action="@{/categories}" th:object="${category}">
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="categoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="categoryName" th:field="*{name}" required>
+                        <div class="form-field">
+                            <label for="categoryName" class="form-field__label">Category Name</label>
+                            <input type="text" class="form-field__input" id="categoryName" th:field="*{name}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -205,9 +203,9 @@
                 </div>
                 <form method="POST" action="/categories/update">
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="editCategoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="editCategoryName" name="name" required>
+                        <div class="form-field">
+                            <label for="editCategoryName" class="form-field__label">Category Name</label>
+                            <input type="text" class="form-field__input" id="editCategoryName" name="name" required>
                         </div>
                     </div>
                     <div class="modal-footer">
