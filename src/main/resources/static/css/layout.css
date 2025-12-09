@@ -1,0 +1,114 @@
+/* Layout - Containers and Grid Systems */
+
+/* Page Container */
+.page-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Section Wrapper */
+.section-wrapper {
+    padding: var(--spacing-md);
+}
+
+/* Section Header */
+.section-header {
+    margin-bottom: var(--spacing-2xl);
+    text-align: center;
+}
+
+.section-header__title {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Articles Grid */
+.articles-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--grid-gap);
+    margin-top: var(--spacing-xl);
+}
+
+/* Responsive Grid - Tablet */
+@media (min-width: 768px) {
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsive Grid - Desktop */
+@media (min-width: 992px) {
+    .articles-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Form Layout */
+.form-container {
+    padding: var(--spacing-xl) 0;
+}
+
+.form-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-wrapper--narrow {
+    max-width: 600px;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    padding: var(--spacing-xl) 0;
+}
+
+.dashboard-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Detail Layout */
+.detail-container {
+    padding: var(--spacing-xl) 0;
+}
+
+.detail-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Search Section */
+.search-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.search-forms {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Flex Utilities */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-sm);
+}

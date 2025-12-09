@@ -9,46 +9,42 @@
     <div th:replace="~{index :: nav}"></div>
 
     <div th:if="${param.notAuthorized}">
-        <div class="alert text-danger">
+        <div class="alert alert--danger">
             Not Authorized !
         </div>
     </div>
 
-    <div th:if="${successMessage}" class="alert alert-success">
+    <div th:if="${successMessage}" class="alert alert--success">
         <p th:text="${successMessage}"></p>
     </div>
 
-    <div th:if="${errorMessage}" class="alert alert-danger">
+    <div th:if="${errorMessage}" class="alert alert--danger">
         <p th:text="${errorMessage}"></p>
     </div>
 
-    <div class="m-3">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-10 mb-5">
-                    <h1 class="text-center">Gli ultimi articoli</h1>
-                </div>
-            </div>
-            <div class="container" th:if="${articles.size() > 0}">
-                <div class="row">
-                    <div th:each="article:${articles}" class="col-md-4 mb-4">
-                        <div class="card h-100 d-flex flex-column" style="height: 700px;">
-                            <img th:if="${article.image != null}" th:src="${article.image.path}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
-                            <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${article.title}"></h5>
-                                <p class="card-text" th:text="${article.subtitle}"></p>
-                                <p class="card-text" th:text="${article.user.username}"></p>
-                            </div>
-                            <div class="card-footer">
-                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-dark">Leggi</a>
-                            </div>
-                        </div>
+    <section class="articles-section">
+        <div class="page-container">
+            <header class="section-header">
+                <h1 class="section-header__title">Gli ultimi articoli</h1>
+            </header>
+            <div class="articles-grid" th:if="${articles.size() > 0}">
+                <article class="article-card" th:each="article:${articles}">
+                    <figure class="article-card__figure">
+                        <img th:if="${article.image != null}" th:src="${article.image.path}" class="article-card__image" alt="Article image">
+                        <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="article-card__image" alt="Default article image">
+                    </figure>
+                    <div class="article-card__content">
+                        <h2 class="article-card__title" th:text="${article.title}">Title</h2>
+                        <p class="article-card__subtitle" th:text="${article.subtitle}">Subtitle</p>
+                        <p class="article-card__author" th:text="${article.user.username}">Author</p>
                     </div>
-                </div>
+                    <footer class="article-card__footer">
+                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="button button--dark button--full-width">Leggi</a>
+                    </footer>
+                </article>
             </div>
         </div>
-    </div>
+    </section>
 
     <div th:replace="~{index :: footer}"></div>
     
