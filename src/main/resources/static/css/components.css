@@ -133,17 +133,6 @@
     gap: var(--spacing-sm);
 }
 
-.site-nav__notification-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-.site-nav__notification {
-    display: flex;
-    align-items: center;
-    margin-left: var(--spacing-xs);
-}
-
 .site-nav__badge {
     background-color: var(--color-danger);
     color: var(--color-text-inverse);
