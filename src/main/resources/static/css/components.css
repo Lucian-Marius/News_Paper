@@ -10,6 +10,25 @@
     padding: var(--spacing-2xl) var(--spacing-md);
     margin-bottom: 0;
     border-bottom: 4px double var(--color-text-inverse);
+    position: relative;
+}
+
+/* Decorative border at top of header */
+.site-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, 
+        var(--color-text-inverse) 0%, 
+        var(--color-text-inverse) 45%, 
+        transparent 45%, 
+        transparent 55%, 
+        var(--color-text-inverse) 55%, 
+        var(--color-text-inverse) 100%
+    );
 }
 
 .site-header__title {
@@ -100,11 +119,18 @@
     padding: var(--spacing-md);
     transition: background-color var(--transition-fast);
     white-space: nowrap;
+    position: relative;
 }
 
 .site-nav__link:hover {
     background-color: rgba(255, 255, 255, 0.1);
     opacity: 1;
+}
+
+.site-nav__link--with-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
 }
 
 .site-nav__notification-wrapper {
@@ -123,7 +149,14 @@
     color: var(--color-text-inverse);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: 50%;
-    font-size: var(--font-size-sm);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    min-width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 /* Dropdown */
@@ -234,15 +267,16 @@
     display: flex;
     flex-direction: column;
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
     border-radius: 0;
     overflow: hidden;
     height: 100%;
     transition: box-shadow var(--transition-base), transform var(--transition-fast);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .article-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
@@ -251,7 +285,7 @@
     width: 100%;
     height: 240px;
     overflow: hidden;
-    border-bottom: 2px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
 }
 
 .article-card__image {
@@ -300,8 +334,8 @@
 
 .article-card__footer {
     padding: var(--spacing-lg);
-    border-top: 2px solid var(--color-border);
-    background-color: var(--color-surface-light);
+    border-top: 3px double var(--color-border);
+    background-color: var(--color-surface-lighter);
 }
 
 /* ============================================
@@ -442,6 +476,10 @@
     letter-spacing: 0.05em;
     line-height: 1;
     margin: 0 var(--spacing-xs) var(--spacing-xs) 0;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button--primary {
@@ -553,18 +591,18 @@
    ============================================ */
 .form-card {
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
     border-radius: 0;
     overflow: hidden;
     margin-top: var(--spacing-xl);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-card__header {
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
     padding: var(--spacing-lg);
-    border-bottom: 3px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
 }
 
 .form-card__title {
@@ -710,7 +748,8 @@
 .data-table-wrapper {
     overflow-x: auto;
     margin-bottom: var(--spacing-xl);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
+    background-color: var(--color-surface);
 }
 
 .data-table {
@@ -736,10 +775,16 @@
     padding: var(--spacing-md) var(--spacing-md);
     text-align: left;
     font-weight: var(--font-weight-bold);
-    border-bottom: 2px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
     font-size: var(--font-size-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+/* Remove hover effect on table headers to fix white-on-white visibility issue */
+.data-table__header .data-table__row:hover {
+    background-color: var(--color-primary);
 }
 
 .data-table__cell {
@@ -750,11 +795,13 @@
 .data-table__cell--actions {
     white-space: nowrap;
     min-width: 200px;
+    text-align: center;
 }
 
 /* Actions column - prevent wrapping and add spacing */
 .data-table__row .data-table__cell:last-child {
     white-space: nowrap;
+    text-align: center;
 }
 
 .data-table__row .data-table__cell:last-child .button {
@@ -768,18 +815,18 @@
    ============================================ */
 .dashboard-card {
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
     border-radius: 0;
     overflow: hidden;
     margin-bottom: var(--spacing-xl);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-card__header {
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
     padding: var(--spacing-lg);
-    border-bottom: 3px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
 }
 
 .dashboard-card__header--warning {
@@ -1018,7 +1065,23 @@
     text-align: center;
     margin-bottom: var(--spacing-2xl);
     padding-bottom: var(--spacing-lg);
-    border-bottom: 3px double var(--color-border);
+    border-bottom: 4px double var(--color-border);
+    position: relative;
+}
+
+/* Decorative corners for section headers */
+.section-header::before,
+.section-header::after {
+    content: '❖';
+    position: absolute;
+    bottom: -0.75rem;
+    font-size: 1.5rem;
+    color: var(--color-border);
+}
+
+.section-header::before {
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .section-header__title {

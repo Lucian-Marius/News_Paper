@@ -18,7 +18,7 @@
 <body>
     <header th:fragment="header" class="site-header">
         <h1 class="site-header__title">Welcome to news-paper</h1>
-        <p class="site-header__subtitle">Your one-stop solution for the latest news articles.</p>
+        <p class="site-header__subtitle">All the News That Matters, Delivered Fresh Daily</p>
         <span sec:authorize="isAuthenticated()" class="site-header__user-info">
             Welcome: <span th:text="${#authentication.principal.fullName}"></span>
             (<span th:if="${#authentication.principal.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}" th:text="'ADMIN'"></span>
@@ -47,20 +47,16 @@
                         <a class="site-nav__link" th:href="@{/operations/career/request}">Career Request</a>
                     </li>
                     <li class="site-nav__item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <div class="site-nav__notification-wrapper">
-                            <a class="site-nav__link" href="/admin/dashboard">Dashboard</a>
-                            <div class="site-nav__notification" th:if="${careerRequest > 0}">
-                                <span class="site-nav__badge" th:text="${careerRequest}"></span>
-                            </div>
-                        </div>
+                        <a class="site-nav__link site-nav__link--with-badge" href="/admin/dashboard">
+                            Dashboard
+                            <span class="site-nav__badge" th:if="${careerRequest > 0}" th:text="${careerRequest}"></span>
+                        </a>
                     </li>
                     <li class="site-nav__item" sec:authorize="hasRole('ROLE_REVISOR')">
-                        <div class="site-nav__notification-wrapper">
-                            <a class="site-nav__link" href="/revisor/dashboard">Revisor Dashboard</a>
-                            <div class="site-nav__notification" th:if="${articlesToBeRevised > 0}">
-                                <span class="site-nav__badge" th:text="${articlesToBeRevised}"></span>
-                            </div>
-                        </div>
+                        <a class="site-nav__link site-nav__link--with-badge" href="/revisor/dashboard">
+                            Revisor Dashboard
+                            <span class="site-nav__badge" th:if="${articlesToBeRevised > 0}" th:text="${articlesToBeRevised}"></span>
+                        </a>
                     </li>
                     <li class="site-nav__item" sec:authorize="isAuthenticated() and !hasRole('ROLE_USER')">
                         <a class="site-nav__link" href="/writer/dashboard">Writer Dashboard</a>

@@ -91,8 +91,26 @@
 }
 
 .search-forms {
-    max-width: 700px;
+    max-width: 100%;
     margin: 0 auto;
+}
+
+.search-forms-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+    .search-forms-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.search-form-container h3 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
 }
 
 /* Flex Utilities */
