@@ -1069,17 +1069,13 @@
     position: relative;
 }
 
-/* Decorative corners for section headers */
-.section-header::before,
-.section-header::after {
+/* Decorative center ornament for section headers */
+.section-header::before {
     content: '❖';
     position: absolute;
     bottom: -0.75rem;
     font-size: 1.5rem;
     color: var(--color-border);
-}
-
-.section-header::before {
     left: 50%;
     transform: translateX(-50%);
 }
