@@ -46,7 +46,7 @@
                                                 <small class="text-muted" th:text="${request.user.email}">user@email.com</small>
                                             </td>
                                             <td class="data-table__cell">
-                                                <span class="badge badge--info" 
+                                                <span class="text-badge text-badge--info" 
                                                       th:text="${#strings.substring(request.role.name, 5)}">
                                                     WRITER
                                                 </span>
@@ -55,11 +55,11 @@
                                                 <small th:text="${#strings.abbreviate(request.body, 50)}">Request reason here...</small>
                                             </td>
                                             <td class="data-table__cell">
-                                                <span class="badge badge--warning" 
+                                                <span class="text-badge text-badge--warning" 
                                                       th:if="${!request.isChecked}">
                                                     Pending
                                                 </span>
-                                                <span class="badge badge--success" 
+                                                <span class="text-badge text-badge--success" 
                                                       th:if="${request.isChecked}">
                                                     Approved
                                                 </span>
