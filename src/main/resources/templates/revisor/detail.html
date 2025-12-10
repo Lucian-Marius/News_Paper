@@ -18,7 +18,7 @@
                 <div>
                     <h1 th:text="${article.isAccepted == null ? 'Article Review' : 'Article Details'}">Article Review</h1>
                     <p class="text-muted" th:text="${article.isAccepted == null ? 'Review and decide on this pending article' : 'View the details of this processed article'}">Review and decide on this pending article</p>
-                    <a href="/revisor/dashboard" class="button button--secondary button--small" style="margin-bottom: var(--spacing-lg);">
+                    <a href="/revisor/dashboard" class="button button--secondary button--small back-button">
                         ← Back to Dashboard
                     </a>
                 </div>

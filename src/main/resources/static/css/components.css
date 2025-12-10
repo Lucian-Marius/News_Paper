@@ -1091,3 +1091,7 @@
 .section-subtitle {
     margin-bottom: var(--spacing-xl);
 }
+
+.back-button {
+    margin-bottom: var(--spacing-lg);
+}
