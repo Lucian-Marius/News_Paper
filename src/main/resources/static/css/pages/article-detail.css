@@ -1,0 +1,111 @@
+/* ============================================
+   ARTICLE DETAIL PAGE
+   ============================================ */
+
+.article-detail {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--body-bg);
+}
+
+.article-detail__header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.article-detail__title {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--body-text);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.article-detail__image-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.article-detail__image {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.article-detail__content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.article-detail__subtitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-normal);
+    color: var(--body-text);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.4;
+}
+
+.article-detail__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    color: var(--secondary-bg);
+}
+
+.article-detail__author-link {
+    color: var(--secondary-bg);
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+}
+
+.article-detail__author-link:hover {
+    color: var(--primary-bg);
+}
+
+.article-detail__category {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.article-detail__category:hover {
+    background-color: var(--secondary-bg);
+}
+
+.article-detail__body {
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+    color: var(--body-text);
+    margin-bottom: var(--spacing-xl);
+}
+
+.article-detail__back-button {
+    display: inline-block;
+    margin-top: var(--spacing-xl);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .article-detail__title {
+        font-size: 2rem;
+    }
+
+    .article-detail__image {
+        max-height: 300px;
+    }
+
+    .article-detail__content {
+        padding: 0 var(--padding-base);
+    }
+}

@@ -1,0 +1,90 @@
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
+.navbar-nav-main {
+    flex-grow: 1;
+}
+
+.nav-item {
+    margin-left: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    background-color: var(--primary-bg);
+    border: var(--border-width) solid var(--secondary-bg);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu .dropdown-item {
+    color: var(--primary-text);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--padding-base);
+    display: block;
+    transition: background-color var(--transition-fast);
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-toggle {
+    color: var(--primary-text);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar-toggler {
+    background-color: var(--secondary-bg);
+    border: none;
+    color: var(--primary-text);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    border-radius: var(--btn-border-radius);
+    transition: background-color var(--transition-fast);
+}
+
+.navbar-toggler:hover {
+    background-color: var(--hover-bg);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.navbar-collapse.show {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.notification-badge {
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+    border-radius: 50%;
+    padding: 0.2em 0.5em;
+    font-size: 0.75em;
+    font-weight: var(--font-weight-bold);
+    margin-left: var(--spacing-xs);
+    display: inline-block;
+    line-height: 1;
+}

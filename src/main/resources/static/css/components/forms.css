@@ -1,0 +1,94 @@
+/* ============================================
+   FORMS
+   ============================================ */
+
+.form-field {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-field__label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--body-text);
+    font-size: var(--font-size-base);
+}
+
+.form-field__input,
+.form-field__textarea,
+.form-field__select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    background-color: var(--primary-text);
+    color: var(--body-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-field__input:focus,
+.form-field__textarea:focus,
+.form-field__select:focus {
+    outline: none;
+    border-color: var(--primary-bg);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-field__textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-field__error {
+    color: var(--danger-text);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+}
+
+.form-section {
+    padding: var(--spacing-xl) 0;
+    min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+}
+
+.form-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-card__header {
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    padding: var(--padding-base) calc(var(--padding-base) * 1.5);
+    text-align: center;
+}
+
+.form-card__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.form-card__body {
+    padding: calc(var(--padding-base) * 1.5);
+}
+
+.category-form {
+    /* Form-specific styles if needed */
+}
+
+@media (min-width: 768px) {
+    .form-card {
+        max-width: 700px;
+    }
+
+    .form-card__body {
+        padding: calc(var(--padding-base) * 2);
+    }
+}
