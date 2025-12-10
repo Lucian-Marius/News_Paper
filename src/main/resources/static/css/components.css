@@ -660,6 +660,8 @@
     display: flex;
     gap: var(--spacing-sm);
     justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: var(--spacing-lg);
 }
 
 .form-search {
@@ -745,6 +747,7 @@
     width: 100%;
     border-collapse: collapse;
     background-color: var(--color-surface);
+    border: 3px double var(--color-border);
 }
 
 .data-table__header {
@@ -762,13 +765,14 @@
 
 .data-table__header-cell {
     padding: var(--spacing-md) var(--spacing-md);
-    text-align: left;
+    text-align: center;
     font-weight: var(--font-weight-bold);
     border-bottom: 3px double var(--color-border);
     font-size: var(--font-size-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     white-space: nowrap;
+    vertical-align: middle;
 }
 
 /* Remove hover effect on table headers to fix white-on-white visibility issue */
@@ -1000,7 +1004,9 @@
     padding: var(--spacing-lg);
     background-color: var(--color-surface);
     white-space: pre-line;
-    border-radius: var(--border-radius);
+    border-radius: 0;
+    min-height: 200px;
+    overflow: visible;
 }
 
 .review-detail__actions {
@@ -1062,7 +1068,7 @@
 .section-header::before {
     content: '❖';
     position: absolute;
-    bottom: -0.75rem;
+    bottom: -1.25rem;
     font-size: 1.5rem;
     color: var(--color-border);
     left: 50%;

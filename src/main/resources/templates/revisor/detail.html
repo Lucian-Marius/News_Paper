@@ -12,30 +12,16 @@
     <!-- Main Container -->
     <div class="dashboard-container">
         <div class="page-container">
-            <div class="layout-with-sidebar">
-                <!-- Sidebar Navigation -->
-                <aside class="sidebar-nav">
-                    <ul class="sidebar-nav__list">
-                        <li class="sidebar-nav__item">
-                            <a href="/revisor/dashboard" class="sidebar-nav__link">
-                                ← Back to Dashboard
-                            </a>
-                        </li>
-                        <li class="sidebar-nav__item">
-                            <a href="#article-details" class="sidebar-nav__link sidebar-nav__link--active">
-                                Article Details
-                            </a>
-                        </li>
-                    </ul>
-                </aside>
-
-                <!-- Main Content -->
+            <!-- Main Content -->
+            <div>
+                <!-- Header -->
                 <div>
-                    <!-- Header -->
-                    <div>
-                        <h1 th:text="${article.isAccepted == null ? 'Article Review' : 'Article Details'}">Article Review</h1>
-                        <p class="text-muted" th:text="${article.isAccepted == null ? 'Review and decide on this pending article' : 'View the details of this processed article'}">Review and decide on this pending article</p>
-                    </div>
+                    <h1 th:text="${article.isAccepted == null ? 'Article Review' : 'Article Details'}">Article Review</h1>
+                    <p class="text-muted" th:text="${article.isAccepted == null ? 'Review and decide on this pending article' : 'View the details of this processed article'}">Review and decide on this pending article</p>
+                    <a href="/revisor/dashboard" class="button button--secondary button--small" style="margin-bottom: var(--spacing-lg);">
+                        ← Back to Dashboard
+                    </a>
+                </div>
 
                     <!-- Article Details Section -->
                     <div id="article-details" class="dashboard-card">
