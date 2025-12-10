@@ -19,9 +19,6 @@
                     ← Back to Dashboard
                 </a>
                 <div class="form-card">
-                    <div class="form-card__header">
-                        <h3 class="form-card__title">Update Category</h3>
-                    </div>
                     <div class="form-card__body">
                         <form th:action="@{/categories/update/{id}(id=${category.id})}" th:object="${category}" method="post">
                             <!-- Category Name -->
