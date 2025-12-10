@@ -877,6 +877,7 @@
 .dashboard-card__body {
     padding: var(--spacing-xl);
     overflow: visible;
+    max-height: none;
 }
 
 /* ============================================
@@ -1092,17 +1093,16 @@
 .section-header {
     text-align: center;
     margin-bottom: var(--spacing-2xl);
-    padding-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-xl);
     border-bottom: 4px double var(--color-border);
     position: relative;
-    padding-top: var(--spacing-lg);
 }
 
 /* Decorative center ornament for section headers */
 .section-header::before {
     content: '❖';
     position: absolute;
-    top: -1.25rem;
+    bottom: -0.9rem;
     font-size: 1.5rem;
     color: var(--color-border);
     left: 50%;
@@ -1128,20 +1128,4 @@
 
 .back-button {
     margin-bottom: var(--spacing-lg);
-}
-
-/* ============================================
-   MODAL FIXES
-   ============================================ */
-/* Ensure modals are hidden by default */
-.modal {
-    display: none;
-}
-
-.modal.fade {
-    display: none;
-}
-
-.modal.show {
-    display: block;
 }
