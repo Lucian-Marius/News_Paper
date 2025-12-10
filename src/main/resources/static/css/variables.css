@@ -49,6 +49,7 @@
     --grid-gap: var(--spacing-lg);
     --border-radius: 0;
     --border-width: 1px;
+    --content-box-min-height: 200px;
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

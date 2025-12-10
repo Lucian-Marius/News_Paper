@@ -1005,7 +1005,7 @@
     background-color: var(--color-surface);
     white-space: pre-line;
     border-radius: 0;
-    min-height: 200px;
+    min-height: var(--content-box-min-height);
     overflow: visible;
 }
 
@@ -1086,4 +1086,8 @@
 .section-header__subtitle {
     font-style: italic;
     color: var(--color-text-light);
+}
+
+.section-subtitle {
+    margin-bottom: var(--spacing-xl);
 }
