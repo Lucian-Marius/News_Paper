@@ -80,7 +80,7 @@
 .notification-badge {
     background-color: var(--danger-bg);
     color: var(--danger-text);
-    border-radius: 50%;
+    border-radius: 0;
     padding: 0.2em 0.5em;
     font-size: 0.75em;
     font-weight: var(--font-weight-bold);
