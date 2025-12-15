@@ -784,7 +784,7 @@
    DATA TABLES
    ============================================ */
 .data-table-wrapper {
-    overflow-x: visible;
+    overflow-x: auto;
     overflow-y: visible;
     margin-bottom: var(--spacing-xl);
     border: 3px double var(--color-border);
@@ -796,7 +796,8 @@
     border-collapse: collapse;
     background-color: var(--color-surface);
     border: 3px double var(--color-border);
-    table-layout: fixed;
+    table-layout: auto;
+    min-width: 100%;
 }
 
 .data-table__header {
