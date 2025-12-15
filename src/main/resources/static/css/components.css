@@ -127,6 +127,11 @@
     opacity: 1;
 }
 
+.site-nav__link--active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-bottom: 3px solid var(--color-text-inverse);
+}
+
 .site-nav__link--with-badge {
     display: flex;
     align-items: center;
@@ -339,6 +344,15 @@
     margin-bottom: var(--spacing-2xl);
 }
 
+.article-detail__label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--spacing-xs);
+}
+
 .article-detail__title {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--spacing-lg);
@@ -425,32 +439,30 @@
 /* Text-only badges (non-interactive) */
 .text-badge {
     display: inline-block;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: 0;
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
     border-radius: 0;
     cursor: default;
     pointer-events: none;
+    background-color: transparent;
+    border: none;
 }
 
 .text-badge--info {
-    background-color: var(--color-info);
-    color: var(--color-text-inverse);
+    color: var(--color-info);
 }
 
 .text-badge--warning {
-    background-color: var(--color-warning);
-    color: var(--color-text);
+    color: var(--color-warning);
 }
 
 .text-badge--success {
-    background-color: var(--color-success);
-    color: var(--color-text-inverse);
+    color: var(--color-success);
 }
 
 .text-badge--danger {
-    background-color: var(--color-danger);
-    color: var(--color-text-inverse);
+    color: var(--color-danger);
 }
 
 .badge:hover {
@@ -784,7 +796,7 @@
     border-collapse: collapse;
     background-color: var(--color-surface);
     border: 3px double var(--color-border);
-    table-layout: auto;
+    table-layout: fixed;
 }
 
 .data-table__header {
@@ -823,8 +835,8 @@
     vertical-align: middle;
     text-align: center;
     white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-word;
+    overflow-wrap: normal;
+    word-break: normal;
 }
 
 .data-table__cell--actions {
@@ -941,6 +953,7 @@
     border-top: var(--border-width) solid var(--color-border);
     display: flex;
     gap: var(--spacing-sm);
+    justify-content: center;
 }
 
 /* ============================================
@@ -1117,7 +1130,7 @@
     color: var(--color-border);
     left: 50%;
     transform: translateX(-50%);
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.5rem;
 }
 
 .section-header__title {

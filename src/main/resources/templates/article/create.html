@@ -14,9 +14,6 @@
         <div class="page-container">
             <div class="form-wrapper">
                 <h1 th:text="${title}">Create an Article</h1>
-                <a href="/writer/dashboard" class="button button--secondary button--small back-button">
-                    ← Back to Dashboard
-                </a>
                 <div class="form-card">
                     <div class="form-card__body">
                         <form th:action="@{/articles}" th:object="${article}" method="post" enctype="multipart/form-data">
