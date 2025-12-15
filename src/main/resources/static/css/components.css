@@ -117,21 +117,14 @@
     display: block;
     color: var(--color-text-inverse);
     padding: var(--spacing-md);
-    transition: all var(--transition-fast);
+    transition: background-color var(--transition-fast);
     white-space: nowrap;
-    position: relative;
 }
 
 .site-nav__link:hover,
 .site-nav__link:focus {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
     opacity: 1;
-}
-
-/* Active state class for when manually applied */
-.site-nav__link--active {
-    color: #8b7355 !important; /* Brown color for active tab - using !important to override other styles */
-    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .site-nav__link--with-badge {
@@ -1159,6 +1152,35 @@
 
 .section-subtitle {
     margin-bottom: var(--spacing-xl);
+}
+
+/* Page header - standardized header for all pages */
+.page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 4px double var(--color-border);
+    position: relative;
+}
+
+/* Decorative center ornament for page headers */
+.page-header::before {
+    content: '❖';
+    position: absolute;
+    bottom: -0.9rem;
+    font-size: 1.5rem;
+    color: var(--color-border);
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 0.5rem;
+}
+
+.page-header h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-black);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
 }
 
 .back-button {
