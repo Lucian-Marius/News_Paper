@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         const linkPath = new URL(link.href).pathname;
         
-        // Exact match or if current path starts with link path (for sub-pages)
-        if (linkPath === currentPath || (linkPath !== '/' && currentPath.startsWith(linkPath))) {
+        // Exact match for home page, or starts with for sub-pages (but not root for other pages)
+        if (linkPath === currentPath || 
+            (linkPath !== '/' && currentPath !== '/' && currentPath.startsWith(linkPath))) {
             link.classList.add('site-nav__link--active');
         }
     });
