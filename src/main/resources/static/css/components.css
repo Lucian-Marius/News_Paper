@@ -810,7 +810,7 @@
     letter-spacing: 0.05em;
     white-space: normal;
     vertical-align: middle;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Remove hover effect on table headers to fix white-on-white visibility issue */
@@ -823,7 +823,7 @@
     vertical-align: middle;
     text-align: center;
     white-space: normal;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     word-break: break-word;
 }
 
@@ -833,9 +833,9 @@
     text-align: center;
 }
 
-/* Actions column - prevent wrapping and add spacing */
+/* Actions column - prevent wrapping and add spacing for buttons */
 .data-table__row .data-table__cell:last-child {
-    white-space: nowrap;
+    white-space: nowrap; /* Override normal wrapping to keep action buttons on one line */
     text-align: center;
 }
 
