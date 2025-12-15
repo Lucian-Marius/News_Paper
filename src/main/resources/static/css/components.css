@@ -129,13 +129,6 @@
     font-weight: var(--font-weight-bold);
 }
 
-@media (min-width: 992px) {
-    .site-nav__link:hover,
-    .site-nav__link:focus {
-        border-bottom: 3px solid var(--color-text-inverse);
-    }
-}
-
 /* Active state class for when manually applied */
 .site-nav__link--active {
     background-color: rgba(255, 255, 255, 0.25);
@@ -143,6 +136,8 @@
 }
 
 @media (min-width: 992px) {
+    .site-nav__link:hover,
+    .site-nav__link:focus,
     .site-nav__link--active {
         border-bottom: 3px solid var(--color-text-inverse);
     }
