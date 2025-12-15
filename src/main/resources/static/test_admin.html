@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Test - News Paper</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/pages/admin.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .test-info {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="page-container">
+            <div class="dashboard-content">
+                <h1>Admin Dashboard CSS Test</h1>
+                
+                <!-- Test: Modal should be hidden by default -->
+                <div class="modal fade" id="approveModal" tabindex="-1" style="background-color: red; padding: 20px;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Approve Career Request</h5>
+                                <button type="button" class="btn-close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This "Approve Career Request" modal should be HIDDEN by default</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">Cancel</button>
+                                <button type="button" class="btn btn-success">Approve</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test: Button styles -->
+                <div class="dashboard-card">
+                    <div class="dashboard-card__header">
+                        <h5 class="dashboard-card__title">Button Styles Test (Bootstrap btn classes)</h5>
+                    </div>
+                    <div class="dashboard-card__body">
+                        <p>These buttons should match the application theme:</p>
+                        <button class="btn btn-primary">Primary Button</button>
+                        <button class="btn btn-secondary">Secondary Button</button>
+                        <button class="btn btn-success">Success Button</button>
+                        <button class="btn btn-danger">Danger Button</button>
+                        <button class="btn btn-warning">Warning Button</button>
+                        <button class="btn btn-info">Info Button</button>
+                    </div>
+                </div>
+
+                <!-- Test: Add Category Modal (should be hidden) -->
+                <div class="modal fade" id="addCategoryModal" tabindex="-1" style="background-color: blue; padding: 20px;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add New Category</h5>
+                                <button type="button" class="btn-close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This "Add Category" modal should be HIDDEN by default</p>
+                                <div class="form-field">
+                                    <label for="categoryName" class="form-field__label">Category Name</label>
+                                    <input type="text" class="form-field__input" id="categoryName" placeholder="Enter category name">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-success">Add Category</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test: Edit Category Modal (should be hidden) -->
+                <div class="modal fade" id="editCategoryModal" tabindex="-1" style="background-color: green; padding: 20px;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Category</h5>
+                                <button type="button" class="btn-close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This "Edit Category" modal should be HIDDEN by default</p>
+                                <div class="form-field">
+                                    <label for="editCategoryName" class="form-field__label">Category Name</label>
+                                    <input type="text" class="form-field__input" id="editCategoryName" placeholder="Enter category name">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-warning">Update Category</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test: Request Details Modal (should be hidden) -->
+                <div class="modal fade" id="detailModal" tabindex="-1" style="background-color: orange; padding: 20px;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Request Details</h5>
+                                <button type="button" class="btn-close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This "Request Details" modal should be HIDDEN by default</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-info">
+                    <strong>TEST RESULTS:</strong>
+                    <ul>
+                        <li>✅ All modals above should be HIDDEN (if you see colored backgrounds, they are not hidden)</li>
+                        <li>✅ Buttons should have consistent styling matching the theme</li>
+                        <li>✅ Input fields in modals should have constrained width</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
