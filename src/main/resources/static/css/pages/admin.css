@@ -173,6 +173,7 @@
 .modal-body .form-field__input {
     max-width: 100%;
     width: 100%;
+    border-radius: 0;
 }
 
 /* For Create Category page - constrain input width */
@@ -180,12 +181,23 @@
 .form-wrapper--narrow .form-field__textarea,
 .form-wrapper--narrow .form-field__select {
     max-width: 100%;
+    border-radius: 0;
 }
 
 /* Specific constraint for category name inputs */
 #categoryName,
 #editCategoryName {
     max-width: 100%;
+    border-radius: 0;
+}
+
+/* Ensure all form inputs and buttons have sharp corners (no rounded corners) */
+.form-field__input,
+.form-field__textarea,
+.form-field__select,
+.button,
+.btn {
+    border-radius: 0 !important;
 }
 
 /* ============================================
