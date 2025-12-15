@@ -15,10 +15,11 @@
     <div class="form-container">
         <div class="page-container">
             <div class="form-wrapper form-wrapper--narrow">
+                <h1>Update Category</h1>
+                <a href="/admin/dashboard" class="button button--secondary button--small back-button">
+                    ← Back to Dashboard
+                </a>
                 <div class="form-card">
-                    <div class="form-card__header">
-                        <h3 class="form-card__title">Update Category</h3>
-                    </div>
                     <div class="form-card__body">
                         <form th:action="@{/categories/update/{id}(id=${category.id})}" th:object="${category}" method="post">
                             <!-- Category Name -->

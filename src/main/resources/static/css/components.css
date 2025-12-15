@@ -10,6 +10,25 @@
     padding: var(--spacing-2xl) var(--spacing-md);
     margin-bottom: 0;
     border-bottom: 4px double var(--color-text-inverse);
+    position: relative;
+}
+
+/* Decorative border at top of header */
+.site-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, 
+        var(--color-text-inverse) 0%, 
+        var(--color-text-inverse) 45%, 
+        transparent 45%, 
+        transparent 55%, 
+        var(--color-text-inverse) 55%, 
+        var(--color-text-inverse) 100%
+    );
 }
 
 .site-header__title {
@@ -100,6 +119,7 @@
     padding: var(--spacing-md);
     transition: background-color var(--transition-fast);
     white-space: nowrap;
+    position: relative;
 }
 
 .site-nav__link:hover {
@@ -107,23 +127,25 @@
     opacity: 1;
 }
 
-.site-nav__notification-wrapper {
+.site-nav__link--with-badge {
     display: flex;
     align-items: center;
-}
-
-.site-nav__notification {
-    display: flex;
-    align-items: center;
-    margin-left: var(--spacing-xs);
+    gap: var(--spacing-sm);
 }
 
 .site-nav__badge {
     background-color: var(--color-danger);
     color: var(--color-text-inverse);
     padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: 50%;
-    font-size: var(--font-size-sm);
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    min-width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 /* Dropdown */
@@ -234,15 +256,16 @@
     display: flex;
     flex-direction: column;
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
     border-radius: 0;
     overflow: hidden;
     height: 100%;
     transition: box-shadow var(--transition-base), transform var(--transition-fast);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .article-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
@@ -251,7 +274,7 @@
     width: 100%;
     height: 240px;
     overflow: hidden;
-    border-bottom: 2px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
 }
 
 .article-card__image {
@@ -300,8 +323,8 @@
 
 .article-card__footer {
     padding: var(--spacing-lg);
-    border-top: 2px solid var(--color-border);
-    background-color: var(--color-surface-light);
+    border-top: 3px double var(--color-border);
+    background-color: var(--color-surface-lighter);
 }
 
 /* ============================================
@@ -393,10 +416,41 @@
     padding: var(--spacing-xs) var(--spacing-md);
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
-    border-radius: 50px;
+    border-radius: 0;
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
     text-decoration: none;
+}
+
+/* Text-only badges (non-interactive) */
+.text-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    border-radius: 0;
+    cursor: default;
+    pointer-events: none;
+}
+
+.text-badge--info {
+    background-color: var(--color-info);
+    color: var(--color-text-inverse);
+}
+
+.text-badge--warning {
+    background-color: var(--color-warning);
+    color: var(--color-text);
+}
+
+.text-badge--success {
+    background-color: var(--color-success);
+    color: var(--color-text-inverse);
+}
+
+.text-badge--danger {
+    background-color: var(--color-danger);
+    color: var(--color-text-inverse);
 }
 
 .badge:hover {
@@ -442,6 +496,10 @@
     letter-spacing: 0.05em;
     line-height: 1;
     margin: 0 var(--spacing-xs) var(--spacing-xs) 0;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button--primary {
@@ -553,18 +611,18 @@
    ============================================ */
 .form-card {
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
     border-radius: 0;
     overflow: hidden;
     margin-top: var(--spacing-xl);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-card__header {
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
     padding: var(--spacing-lg);
-    border-bottom: 3px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
 }
 
 .form-card__title {
@@ -633,6 +691,8 @@
     display: flex;
     gap: var(--spacing-sm);
     justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: var(--spacing-lg);
 }
 
 .form-search {
@@ -709,14 +769,17 @@
    ============================================ */
 .data-table-wrapper {
     overflow-x: auto;
+    overflow-y: visible;
     margin-bottom: var(--spacing-xl);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
+    background-color: var(--color-surface);
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
     background-color: var(--color-surface);
+    border: 3px double var(--color-border);
 }
 
 .data-table__header {
@@ -734,12 +797,19 @@
 
 .data-table__header-cell {
     padding: var(--spacing-md) var(--spacing-md);
-    text-align: left;
+    text-align: center;
     font-weight: var(--font-weight-bold);
-    border-bottom: 2px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
     font-size: var(--font-size-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Remove hover effect on table headers to fix white-on-white visibility issue */
+.data-table__header .data-table__row:hover {
+    background-color: var(--color-primary);
 }
 
 .data-table__cell {
@@ -750,11 +820,13 @@
 .data-table__cell--actions {
     white-space: nowrap;
     min-width: 200px;
+    text-align: center;
 }
 
 /* Actions column - prevent wrapping and add spacing */
 .data-table__row .data-table__cell:last-child {
     white-space: nowrap;
+    text-align: center;
 }
 
 .data-table__row .data-table__cell:last-child .button {
@@ -768,18 +840,18 @@
    ============================================ */
 .dashboard-card {
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 3px double var(--color-border);
     border-radius: 0;
     overflow: hidden;
     margin-bottom: var(--spacing-xl);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-card__header {
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
     padding: var(--spacing-lg);
-    border-bottom: 3px solid var(--color-border);
+    border-bottom: 3px double var(--color-border);
 }
 
 .dashboard-card__header--warning {
@@ -790,11 +862,11 @@
 .dashboard-card__header--success {
     background-color: var(--color-success);
     color: var(--color-text-inverse);
+}
 
 .dashboard-card__header--info {
     background-color: var(--color-info);
     color: var(--color-text-inverse);
-}
 }
 
 .dashboard-card__title {
@@ -804,6 +876,8 @@
 
 .dashboard-card__body {
     padding: var(--spacing-xl);
+    overflow: visible;
+    max-height: none;
 }
 
 /* ============================================
@@ -964,7 +1038,9 @@
     padding: var(--spacing-lg);
     background-color: var(--color-surface);
     white-space: pre-line;
-    border-radius: var(--border-radius);
+    border-radius: 0;
+    min-height: var(--content-box-min-height);
+    overflow: visible;
 }
 
 .review-detail__actions {
@@ -1017,8 +1093,20 @@
 .section-header {
     text-align: center;
     margin-bottom: var(--spacing-2xl);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 3px double var(--color-border);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 4px double var(--color-border);
+    position: relative;
+}
+
+/* Decorative center ornament for section headers */
+.section-header::before {
+    content: '❖';
+    position: absolute;
+    bottom: -0.9rem;
+    font-size: 1.5rem;
+    color: var(--color-border);
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .section-header__title {
@@ -1032,4 +1120,12 @@
 .section-header__subtitle {
     font-style: italic;
     color: var(--color-text-light);
+}
+
+.section-subtitle {
+    margin-bottom: var(--spacing-xl);
+}
+
+.back-button {
+    margin-bottom: var(--spacing-lg);
 }

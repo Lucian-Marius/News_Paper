@@ -18,16 +18,22 @@
             <!-- Search Forms -->
             <div class="search-section">
                 <div class="search-forms">
-                    <h3>Search by Title, Content, or Author</h3>
-                    <form th:action="@{/articles}" method="get" class="form-search">
-                        <input type="text" name="q" class="form-search__input" placeholder="Search by title, content, or author..." th:value="${query}">
-                        <button type="submit" class="button button--primary form-search__button">Search</button>
-                    </form>
-                    <h3>Search by Keyword (Title, Subtitle, Author, Category)</h3>
-                    <form th:action="@{/articles/search}" method="get" class="form-search">
-                        <input type="text" name="keyword" class="form-search__input" placeholder="Search by keyword across all fields...">
-                        <button type="submit" class="button button--secondary form-search__button">Search</button>
-                    </form>
+                    <div class="search-forms-grid">
+                        <div class="search-form-container">
+                            <h3>Search by Title, Content, or Author</h3>
+                            <form th:action="@{/articles}" method="get" class="form-search">
+                                <input type="text" name="q" class="form-search__input" placeholder="Search by title, content, or author..." th:value="${query}">
+                                <button type="submit" class="button button--primary form-search__button">Search</button>
+                            </form>
+                        </div>
+                        <div class="search-form-container">
+                            <h3>Search by Keyword (Title, Subtitle, Author, Category)</h3>
+                            <form th:action="@{/articles/search}" method="get" class="form-search">
+                                <input type="text" name="keyword" class="form-search__input" placeholder="Search by keyword across all fields...">
+                                <button type="submit" class="button button--secondary form-search__button">Search</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             

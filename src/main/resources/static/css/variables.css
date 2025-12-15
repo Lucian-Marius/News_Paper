@@ -1,17 +1,17 @@
 /* CSS Custom Properties - Design Tokens */
 :root {
-    /* Colors - Classic Newspaper Palette */
+    /* Colors - Vintage Newspaper Palette */
     --color-primary: #1a1a1a;
     --color-secondary: #2d2d2d;
-    --color-background: #f5f5f0;
-    --color-surface: #ffffff;
-    --color-surface-light: #fafaf8;
-    --color-surface-lighter: #f9f9f7;
+    --color-background: #F4ECD8; /* Aged paper */
+    --color-surface: #FEFEF0; /* Yellowed white */
+    --color-surface-light: #FFF8DC; /* Cornsilk - vintage yellow */
+    --color-surface-lighter: #F5E6D3; /* Light aged paper */
     --color-text: #1a1a1a;
-    --color-text-light: #666666;
+    --color-text-light: #4a4a4a;
     --color-text-inverse: #ffffff;
-    --color-border: #333333;
-    --color-border-light: #d4d4d4;
+    --color-border: #2d2d2d;
+    --color-border-light: #8b7355;
     --color-success: #2d5016;
     --color-danger: #8b0000;
     --color-warning: #b8860b;
@@ -47,8 +47,9 @@
     --container-max-width: 1200px;
     --container-padding: var(--spacing-md);
     --grid-gap: var(--spacing-lg);
-    --border-radius: 0.375rem;
+    --border-radius: 0;
     --border-width: 1px;
+    --content-box-min-height: 200px;
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

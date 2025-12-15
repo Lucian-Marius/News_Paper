@@ -15,6 +15,10 @@
                         <h1 class="section-header__title">Request</h1>
                     </header>
 
+                    <a th:href="@{/admin/dashboard}" class="button button--secondary button--small back-button">
+                        ← Back to Dashboard
+                    </a>
+
                     <div class="review-detail">
                         <h2 class="review-detail__title text-center" th:text="${request.user.username}">Username</h2>
                         
@@ -28,9 +32,6 @@
                                     Accept
                                 </button>
                             </form>
-                            <a th:href="@{/admin/dashboard}" class="button button--primary">
-                                Back to Dashboard
-                            </a>
                         </div>
                     </div>
                 </div>
