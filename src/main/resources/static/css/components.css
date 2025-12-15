@@ -723,6 +723,10 @@
     border: var(--border-width) solid transparent;
     border-radius: var(--border-radius);
     position: relative;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .alert--success {
@@ -768,7 +772,7 @@
    DATA TABLES
    ============================================ */
 .data-table-wrapper {
-    overflow-x: auto;
+    overflow-x: visible;
     overflow-y: visible;
     margin-bottom: var(--spacing-xl);
     border: 3px double var(--color-border);
@@ -780,6 +784,7 @@
     border-collapse: collapse;
     background-color: var(--color-surface);
     border: 3px double var(--color-border);
+    table-layout: auto;
 }
 
 .data-table__header {
@@ -803,8 +808,9 @@
     font-size: var(--font-size-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    white-space: nowrap;
+    white-space: normal;
     vertical-align: middle;
+    word-wrap: break-word;
 }
 
 /* Remove hover effect on table headers to fix white-on-white visibility issue */
@@ -815,6 +821,10 @@
 .data-table__cell {
     padding: var(--spacing-md);
     vertical-align: middle;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .data-table__cell--actions {
@@ -1107,6 +1117,7 @@
     color: var(--color-border);
     left: 50%;
     transform: translateX(-50%);
+    padding-bottom: 0.2rem;
 }
 
 .section-header__title {
