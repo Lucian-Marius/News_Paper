@@ -10,7 +10,9 @@
 	<div class="form-container">
 		<div class="page-container">
 			<div class="form-wrapper">
-				<h1 th:text="${title}">Richiesta collaborazione</h1>
+				<div class="page-header">
+					<h1>Career Request</h1>
+				</div>
 				<form th:action="@{/operations/career/request/save}" method="POST" th:object="${careerRequest}" class="form-card">
 					<div class="form-card__body">
 						<div class="form-field">

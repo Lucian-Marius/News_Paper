@@ -9,6 +9,7 @@
         <div class="page-container">
             <article class="article-detail">
                 <header class="article-detail__header">
+                    <p class="article-detail__label">Title</p>
                     <h1 class="article-detail__title" th:text="${article.title}">Titolo</h1>
                 </header>
                 
@@ -27,6 +28,7 @@
                 <!-- Article Content Section -->
                 <div class="detail-content">
                     <!-- Subtitle -->
+                    <p class="article-detail__label">Subtitle</p>
                     <h2 class="article-detail__subtitle" th:text="${article.subtitle}">Sottotitolo</h2>
 
                     <!-- Author Info -->
