@@ -4,12 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.site-nav__link');
     
     navLinks.forEach(link => {
-        const linkPath = new URL(link.href).pathname;
+        // Skip if link doesn't have href
+        if (!link.href) return;
         
-        // Exact match for home page, or starts with for sub-pages (but not root for other pages)
-        if (linkPath === currentPath || 
-            (linkPath !== '/' && currentPath !== '/' && currentPath.startsWith(linkPath))) {
-            link.classList.add('site-nav__link--active');
+        try {
+            const linkPath = new URL(link.href).pathname;
+            
+            // Exact match
+            if (linkPath === currentPath) {
+                link.classList.add('site-nav__link--active');
+            }
+            // Starts with match (for sub-pages), but not for root
+            else if (linkPath !== '/' && currentPath !== '/' && currentPath.startsWith(linkPath)) {
+                link.classList.add('site-nav__link--active');
+            }
+        } catch (e) {
+            console.error('Error processing link:', link.href, e);
         }
     });
 });
