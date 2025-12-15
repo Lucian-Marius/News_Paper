@@ -130,7 +130,7 @@
 
 /* Active state class for when manually applied */
 .site-nav__link--active {
-    color: #8b7355; /* Brown color for active tab */
+    color: #8b7355 !important; /* Brown color for active tab - using !important to override other styles */
     background-color: rgba(255, 255, 255, 0.15);
 }
 

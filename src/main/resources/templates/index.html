@@ -35,39 +35,57 @@
             <div class="site-nav__collapse" id="navbarNav">
                 <ul class="site-nav__list">
                     <li class="site-nav__item">
-                        <a class="site-nav__link" href="/">Home</a>
+                        <a class="site-nav__link" 
+                           th:classappend="${#httpServletRequest != null && (#httpServletRequest.requestURI == '/' || #httpServletRequest.requestURI == '/home')} ? 'site-nav__link--active' : ''"
+                           href="/">Home</a>
                     </li>
                     <li class="site-nav__item">
-                        <a class="site-nav__link" href="/articles/create">Create Article</a>
+                        <a class="site-nav__link"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/articles/create')} ? 'site-nav__link--active' : ''"
+                           href="/articles/create">Create Article</a>
                     </li>
                     <li class="site-nav__item">
-                        <a class="site-nav__link" href="/articles">Articles</a>
+                        <a class="site-nav__link"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/articles') && !#strings.startsWith(#httpServletRequest.requestURI, '/articles/create')} ? 'site-nav__link--active' : ''"
+                           href="/articles">Articles</a>
                     </li>
                     <li class="site-nav__item">
-                        <a class="site-nav__link" th:href="@{/operations/career/request}">Career Request</a>
+                        <a class="site-nav__link"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/operations/career')} ? 'site-nav__link--active' : ''"
+                           th:href="@{/operations/career/request}">Career Request</a>
                     </li>
                     <li class="site-nav__item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="site-nav__link site-nav__link--with-badge" href="/admin/dashboard">
+                        <a class="site-nav__link site-nav__link--with-badge"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/admin')} ? 'site-nav__link--active' : ''"
+                           href="/admin/dashboard">
                             Dashboard
                             <span class="site-nav__badge" th:if="${careerRequest > 0}" th:text="${careerRequest}"></span>
                         </a>
                     </li>
                     <li class="site-nav__item" sec:authorize="hasRole('ROLE_REVISOR')">
-                        <a class="site-nav__link site-nav__link--with-badge" href="/revisor/dashboard">
+                        <a class="site-nav__link site-nav__link--with-badge"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/revisor')} ? 'site-nav__link--active' : ''"
+                           href="/revisor/dashboard">
                             Revisor Dashboard
                             <span class="site-nav__badge" th:if="${articlesToBeRevised > 0}" th:text="${articlesToBeRevised}"></span>
                         </a>
                     </li>
                     <li class="site-nav__item" sec:authorize="isAuthenticated() and !hasRole('ROLE_USER')">
-                        <a class="site-nav__link" href="/writer/dashboard">Writer Dashboard</a>
+                        <a class="site-nav__link"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/writer')} ? 'site-nav__link--active' : ''"
+                           href="/writer/dashboard">Writer Dashboard</a>
                     </li>
                 </ul>
                 <ul class="site-nav__list">
                     <li class="site-nav__item" sec:authorize="isAnonymous()">
-                        <a class="site-nav__link" th:href="@{/auth/register}">Register</a>
+                        <a class="site-nav__link"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/auth/register')} ? 'site-nav__link--active' : ''"
+                           th:href="@{/auth/register}">Register</a>
                     </li>
                     <li class="site-nav__item" sec:authorize="isAnonymous()">
-                        <a class="site-nav__link" th:href="@{/auth/login}">Login</a>
+                        <a class="site-nav__link"
+                           th:classappend="${#httpServletRequest != null && #strings.startsWith(#httpServletRequest.requestURI, '/auth/login')} ? 'site-nav__link--active' : ''"
+                           th:href="@{/auth/login}">Login</a>
                     </li>
                     <li class="site-nav__item" sec:authorize="isAuthenticated()">
                         <a class="site-nav__link" th:href="@{/logout}">Logout</a>
