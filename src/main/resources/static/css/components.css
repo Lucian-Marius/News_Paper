@@ -128,8 +128,14 @@
 }
 
 .site-nav__link--active {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-bottom: 3px solid var(--color-text-inverse);
+    background-color: rgba(255, 255, 255, 0.25);
+    font-weight: var(--font-weight-bold);
+}
+
+@media (min-width: 992px) {
+    .site-nav__link--active {
+        border-bottom: 3px solid var(--color-text-inverse);
+    }
 }
 
 .site-nav__link--with-badge {
