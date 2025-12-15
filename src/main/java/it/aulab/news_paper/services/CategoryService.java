@@ -30,20 +30,29 @@ public class CategoryService implements CrudService<CategoryDto, Category, Long>
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * Helper method to convert Category to CategoryDto with article count
+     */
+    private CategoryDto toDtoWithArticleCount(Category category) {
+        CategoryDto dto = modelMapper.map(category, CategoryDto.class);
+        dto.setNumberOfArticles(category.getArticles() != null ? category.getArticles().size() : 0);
+        return dto;
+    }
+
     @Override
     public List<CategoryDto> readAll(){
         List<CategoryDto> dtos = new ArrayList<CategoryDto>();
-        for(Category category: categoryRepository.findAll()){
-            CategoryDto dto = modelMapper.map(category, CategoryDto.class);
-            dto.setNumberOfArticles(category.getArticles() != null ? category.getArticles().size() : 0);
-            dtos.add(dto);
+        for(Category category: categoryRepository.findAllWithArticles()){
+            dtos.add(toDtoWithArticleCount(category));
         }
         return dtos;
     }
 
     @Override
     public CategoryDto read(Long key){
-        return modelMapper.map(categoryRepository.findById(key).orElseThrow(() -> new RuntimeException("Category not found")), CategoryDto.class);
+        Category category = categoryRepository.findById(key)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+        return toDtoWithArticleCount(category);
     }
 
     @Override
