@@ -124,23 +124,14 @@
 
 .site-nav__link:hover,
 .site-nav__link:focus {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.15);
     opacity: 1;
-    font-weight: var(--font-weight-bold);
 }
 
 /* Active state class for when manually applied */
 .site-nav__link--active {
-    background-color: rgba(255, 255, 255, 0.25);
-    font-weight: var(--font-weight-bold);
-}
-
-@media (min-width: 992px) {
-    .site-nav__link:hover,
-    .site-nav__link:focus,
-    .site-nav__link--active {
-        border-bottom: 3px solid var(--color-text-inverse);
-    }
+    color: #8b7355; /* Brown color for active tab */
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .site-nav__link--with-badge {
