@@ -1,0 +1,211 @@
+/* ============================================
+   ADMIN PAGE STYLES
+   ============================================ */
+
+/* ============================================
+   MODAL STYLES - Bootstrap Compatibility
+   ============================================ */
+
+/* Hide all modals by default */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal, 1030);
+    overflow-y: auto;
+}
+
+/* Show modal when Bootstrap adds 'show' class */
+.modal.show {
+    display: block;
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    max-width: 500px;
+    margin: 3rem auto;
+    pointer-events: none;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface, #ffffff);
+    border: 2px solid var(--color-border, #000000);
+    border-radius: 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg, 1.5rem);
+    background-color: var(--color-primary, #1a1a1a);
+    color: var(--color-text-inverse, #ffffff);
+    border-bottom: 3px solid var(--color-border, #000000);
+}
+
+.modal-title {
+    margin: 0;
+    font-size: var(--font-size-lg, 1.25rem);
+    font-weight: var(--font-weight-bold, 700);
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--spacing-xl, 2rem);
+}
+
+.modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-sm, 0.5rem);
+    padding: var(--spacing-lg, 1.5rem);
+    border-top: 1px solid var(--color-border-light, #d4d4d4);
+    background-color: var(--color-surface-light, #fafaf8);
+}
+
+/* Close button */
+.btn-close {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-text-inverse, #ffffff);
+    cursor: pointer;
+    opacity: 0.7;
+    padding: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+.btn-close::before {
+    content: "×";
+    display: block;
+    font-size: 2rem;
+}
+
+/* ============================================
+   BOOTSTRAP BUTTON STYLES - Match Theme
+   ============================================ */
+
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1.5rem);
+    font-family: var(--font-family-base, "Newsreader", serif);
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-medium, 500);
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all var(--transition-fast, 0.15s ease-in-out);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+}
+
+.btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: var(--color-primary, #1a1a1a);
+    color: var(--color-text-inverse, #ffffff);
+    border-color: var(--color-primary, #1a1a1a);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary, #2d2d2d);
+    color: var(--color-text-inverse, #ffffff);
+    border-color: var(--color-secondary, #2d2d2d);
+}
+
+.btn-success {
+    background-color: var(--color-success, #2d5016);
+    color: var(--color-text-inverse, #ffffff);
+    border-color: var(--color-success, #2d5016);
+}
+
+.btn-danger {
+    background-color: var(--color-danger, #8b0000);
+    color: var(--color-text-inverse, #ffffff);
+    border-color: var(--color-danger, #8b0000);
+}
+
+.btn-warning {
+    background-color: var(--color-warning, #b8860b);
+    color: var(--color-text-inverse, #ffffff);
+    border-color: var(--color-warning, #b8860b);
+}
+
+.btn-info {
+    background-color: var(--color-info, #2d5016);
+    color: var(--color-text-inverse, #ffffff);
+    border-color: var(--color-info, #2d5016);
+}
+
+/* ============================================
+   MODAL FORM FIELD CONSTRAINTS
+   ============================================ */
+
+/* Constrain input widths in modals */
+.modal-body .form-field__input {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* For Create Category page - constrain input width */
+.form-wrapper--narrow .form-field__input,
+.form-wrapper--narrow .form-field__textarea,
+.form-wrapper--narrow .form-field__select {
+    max-width: 100%;
+}
+
+/* Specific constraint for category name inputs */
+#categoryName,
+#editCategoryName {
+    max-width: 100%;
+}
+
+/* ============================================
+   RESPONSIVE MODAL
+   ============================================ */
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 1rem;
+        max-width: calc(100% - 2rem);
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 500px;
+    }
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        max-width: 600px;
+    }
+}
