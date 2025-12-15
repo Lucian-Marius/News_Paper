@@ -34,7 +34,9 @@ public class CategoryService implements CrudService<CategoryDto, Category, Long>
     public List<CategoryDto> readAll(){
         List<CategoryDto> dtos = new ArrayList<CategoryDto>();
         for(Category category: categoryRepository.findAll()){
-            dtos.add(modelMapper.map(category, CategoryDto.class));
+            CategoryDto dto = modelMapper.map(category, CategoryDto.class);
+            dto.setNumberOfArticles(category.getArticles() != null ? category.getArticles().size() : 0);
+            dtos.add(dto);
         }
         return dtos;
     }
