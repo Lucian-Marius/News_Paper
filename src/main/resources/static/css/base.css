@@ -1,0 +1,78 @@
+/* Base Styles - Reset and Typography */
+
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base Typography */
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    padding-bottom: 100px; /* Space for fixed footer */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-family-heading);
+}
+
+h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-black);
+}
+
+h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+h3 {
+    font-size: var(--font-size-lg);
+}
+
+h4, h5, h6 {
+    font-size: var(--font-size-base);
+}
+
+/* Links */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Lists */
+ul, ol {
+    list-style: none;
+}
+
+/* Text Utilities */
+.text-muted {
+    color: var(--color-text-light);
+}
+
+.text-center {
+    text-align: center;
+}

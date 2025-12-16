@@ -1,0 +1,33 @@
+/* ============================================
+   CARDS
+   ============================================ */
+
+.dashboard-card {
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--card-border-radius);
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card__header {
+    padding: var(--padding-base);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+}
+
+.dashboard-card--warning .dashboard-card__header {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.dashboard-card__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.dashboard-card__body {
+    padding: var(--padding-base);
+}

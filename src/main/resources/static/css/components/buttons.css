@@ -1,0 +1,100 @@
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--padding-base);
+    border: none;
+    border-radius: var(--btn-border-radius);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast),
+                opacity var(--transition-fast),
+                transform var(--transition-fast);
+    line-height: 1.5;
+}
+
+.button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Button Variants */
+.button--primary {
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+}
+
+.button--secondary {
+    background-color: var(--hover-bg);
+    color: var(--primary-text);
+}
+
+.button--dark {
+    background-color: #343a40;
+    color: var(--primary-text);
+}
+
+.button--success {
+    background-color: #6b8e4e;
+    color: var(--primary-text);
+}
+
+.button--danger {
+    background-color: #8b6f47;
+    color: var(--primary-text);
+}
+
+.button--info {
+    background-color: #17a2b8;
+    color: var(--primary-text);
+}
+
+.button--warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+/* Button Sizes */
+.button--small {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+}
+
+.button--large {
+    padding: var(--spacing-md) calc(var(--padding-base) * 1.5);
+    font-size: var(--font-size-lg);
+}
+
+/* Button Modifiers */
+.button--full-width {
+    width: 100%;
+}
+
+.button--outline {
+    background-color: transparent;
+    border: var(--border-width) solid currentColor;
+}
+
+.button--outline.button--primary {
+    color: var(--primary-bg);
+}
+
+.button--outline.button--dark {
+    color: #343a40;
+}
