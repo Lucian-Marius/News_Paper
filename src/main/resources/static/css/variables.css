@@ -12,10 +12,10 @@
     --color-text-inverse: #ffffff;
     --color-border: #2d2d2d;
     --color-border-light: #8b7355;
-    --color-success: #2d5016;
-    --color-danger: #8b0000;
+    --color-success: #6b8e4e;
+    --color-danger: #8b6f47;
     --color-warning: #b8860b;
-    --color-info: #2d5016;
+    --color-info: #6b8e4e;
 
     /* Typography - Enhanced for Newspaper */
     --font-family-base: "Newsreader", "Georgia", "Times New Roman", serif;

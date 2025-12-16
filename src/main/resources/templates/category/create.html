@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{index :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,10 @@
                     <h1>Create New Category</h1>
                 </div>
                 <p class="text-muted section-subtitle">Add a new category for organizing articles</p>
+                
+                <a href="/admin/dashboard" class="button button--secondary button--small back-button">
+                    ← Back to Dashboard
+                </a>
                 
                 <div class="form-card">
                     <div class="form-card__header">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{index :: head}">
     <meta charset="UTF-8">
     <title>Home Page</title>
@@ -8,24 +8,26 @@
     <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
 
-    <div th:if="${param.notAuthorized}">
-        <div class="alert alert--danger">
-            Not Authorized !
+    <div class="page-container">
+        <div th:if="${param.notAuthorized}">
+            <div class="alert alert--danger">
+                Not Authorized !
+            </div>
         </div>
-    </div>
 
-    <div th:if="${successMessage}" class="alert alert--success">
-        <p th:text="${successMessage}"></p>
-    </div>
+        <div th:if="${successMessage}" class="alert alert--success">
+            <p th:text="${successMessage}"></p>
+        </div>
 
-    <div th:if="${errorMessage}" class="alert alert--danger">
-        <p th:text="${errorMessage}"></p>
+        <div th:if="${errorMessage}" class="alert alert--danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
     </div>
 
     <section class="articles-section">
         <div class="page-container">
             <header class="section-header">
-                <h1 class="section-header__title">Gli ultimi articoli</h1>
+                <h1 class="section-header__title">Latest Articles</h1>
             </header>
             <div class="articles-grid" th:if="${articles.size() > 0}">
                 <article class="article-card" th:each="article:${articles}">
@@ -39,7 +41,7 @@
                         <p class="article-card__author" th:text="${article.user.username}">Author</p>
                     </div>
                     <footer class="article-card__footer">
-                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="button button--dark button--full-width">Leggi</a>
+                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="button button--dark button--full-width">Read</a>
                     </footer>
                 </article>
             </div>

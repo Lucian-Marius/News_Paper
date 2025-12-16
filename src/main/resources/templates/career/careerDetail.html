@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{index :: head}">
         <meta charset="UTF-8">
         <title>Career Detail</title>
@@ -20,10 +20,18 @@
                     </a>
 
                     <div class="review-detail">
-                        <h2 class="review-detail__title text-center" th:text="${request.user.username}">Username</h2>
+                        <div class="review-detail__metadata">
+                            <div class="review-detail__metadata-item">
+                                <strong>User:</strong>
+                                <span th:text="${request.user.username}">Username</span>
+                            </div>
+                        </div>
                         
                         <div class="review-detail__content-section">
-                            <p th:text="${request.body}">Body</p>
+                            <h5>Reason:</h5>
+                            <div class="review-detail__content-box" th:text="${request.body}">
+                                Body
+                            </div>
                         </div>
 
                         <div class="review-detail__actions">
