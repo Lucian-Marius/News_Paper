@@ -35,22 +35,29 @@
                     <p class="article-detail__label">Subtitle</p>
                     <h2 class="article-detail__subtitle" th:text="${article.subtitle}">Sottotitolo</h2>
 
-                    <!-- Author Info -->
-                    <div class="article-detail__meta">
-                        <p>Published on <span th:text="${article.publishDate}">data</span> by
-                        <a class="article-detail__meta-link" th:href="@{/search/{id}(id=${article.user.id})}" >
-                            <span th:text="${article.user.username}">User</span>
-                        </a>
-                        </p>
+                    <!-- Article Metadata -->
+                    <div class="review-detail__metadata">
+                        <div class="review-detail__metadata-item">
+                            <strong>Author:</strong>
+                            <a class="article-detail__meta-link" th:href="@{/search/{id}(id=${article.user.id})}" >
+                                <span th:text="${article.user.username}">User</span>
+                            </a>
+                        </div>
+                        <div class="review-detail__metadata-item">
+                            <strong>Published:</strong>
+                            <span th:text="${article.publishDate}">data</span>
+                        </div>
                     </div>
 
                     <!-- Category & Author Tags -->
                     <div class="article-detail__tags" th:if="${article.category != null}">
+                        <strong>Category:</strong>
                         <a class="badge" th:href="@{/categories/search/{id}(id=${article.category.id})}" th:text="${article.category.name}">Category</a>
                     </div>
 
                     <!-- Article Text Content -->
                     <div class="article-detail__body">
+                        <h5>Content:</h5>
                         <p th:text="${article.body}">Article content goes here</p>
                     </div>
                 </div>
