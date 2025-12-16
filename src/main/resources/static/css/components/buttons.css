@@ -51,12 +51,12 @@
 }
 
 .button--success {
-    background-color: #28a745;
+    background-color: #6b8e4e;
     color: var(--primary-text);
 }
 
 .button--danger {
-    background-color: #dc3545;
+    background-color: #8b6f47;
     color: var(--primary-text);
 }
 

@@ -89,15 +89,13 @@
 
                 <!-- Categories Section -->
                 <div id="categories-section" class="dashboard-card">
-                    <div class="dashboard-card__header dashboard-card__header--success">
-                        <h5 class="dashboard-card__title">Manage Categories</h5>
+                    <div class="dashboard-card__header dashboard-card__header--success" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h5 class="dashboard-card__title" style="margin: 0;">Manage Categories</h5>
+                        <a href="/categories/create" class="button button--success">
+                            Add New Category
+                        </a>
                     </div>
                     <div class="dashboard-card__body">
-                        <div>
-                            <a href="/categories/create" class="button button--success">
-                                Add New Category
-                            </a>
-                        </div>
                         <div th:if="${categories.size() > 0}">
                             <div class="category-grid">
                                 <div th:each="category : ${categories}" class="category-card">
