@@ -880,6 +880,12 @@
     border-bottom: 3px double var(--color-border);
 }
 
+.dashboard-card__header--flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .dashboard-card__header--warning {
     background-color: var(--color-warning);
     color: var(--color-text);

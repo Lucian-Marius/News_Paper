@@ -8,24 +8,22 @@
     <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
 
-    <div class="page-container">
-        <div th:if="${param.notAuthorized}">
-            <div class="alert alert--danger">
-                Not Authorized !
-            </div>
-        </div>
-
-        <div th:if="${successMessage}" class="alert alert--success">
-            <p th:text="${successMessage}"></p>
-        </div>
-
-        <div th:if="${errorMessage}" class="alert alert--danger">
-            <p th:text="${errorMessage}"></p>
-        </div>
-    </div>
-
     <section class="articles-section">
         <div class="page-container">
+            <div th:if="${param.notAuthorized}">
+                <div class="alert alert--danger">
+                    Not Authorized !
+                </div>
+            </div>
+
+            <div th:if="${successMessage}" class="alert alert--success">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <div th:if="${errorMessage}" class="alert alert--danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            
             <header class="section-header">
                 <h1 class="section-header__title">Latest Articles</h1>
             </header>

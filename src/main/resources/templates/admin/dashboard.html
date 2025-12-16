@@ -89,13 +89,11 @@
 
                 <!-- Categories Section -->
                 <div id="categories-section" class="dashboard-card">
-                    <div class="dashboard-card__header dashboard-card__header--success">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h5 class="dashboard-card__title" style="margin: 0;">Manage Categories</h5>
-                            <a href="/categories/create" class="button button--secondary button--small">
-                                Add New Category
-                            </a>
-                        </div>
+                    <div class="dashboard-card__header dashboard-card__header--success dashboard-card__header--flex">
+                        <h5 class="dashboard-card__title">Manage Categories</h5>
+                        <a href="/categories/create" class="button button--secondary button--small">
+                            Add New Category
+                        </a>
                     </div>
                     <div class="dashboard-card__body">
                         <div th:if="${categories.size() > 0}">
