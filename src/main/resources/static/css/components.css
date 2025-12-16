@@ -744,15 +744,15 @@
 }
 
 .alert--success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
+    background-color: #e8f0e3;
+    border-color: #d0e0c8;
+    color: #4a6b3a;
 }
 
 .alert--danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
+    background-color: #f5f0e8;
+    border-color: #e8dfd0;
+    color: #6b5538;
 }
 
 .alert--warning {
