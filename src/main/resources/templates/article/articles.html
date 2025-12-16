@@ -4,56 +4,63 @@
 <body>
     <header th:insert="~{index :: header}"></header>
     <div th:replace="~{index :: nav}"></div>
-    <div class="m-3">
-        <div th:if="${successMessage}" class="alert alert-success">
-            <p th:text="${successMessage}"></p>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-10 mb-5">
-                    <h1 class="text-center" th:text="${title}">Index articoli</h1>
-                </div>
+    
+    <section class="articles-section">
+        <div class="page-container">
+            <div th:if="${successMessage}" class="alert alert--success">
+                <p th:text="${successMessage}"></p>
             </div>
-            <div class="container mt-4">
-                <!-- Search Forms -->
-                <div class="row justify-content-center mb-4">
-                    <div class="col-10 col-md-6">
-                        <h5>Search by Title, Content, or Author</h5>
-                        <form th:action="@{/articles}" method="get" class="d-flex mb-3">
-                            <input type="text" name="q" class="form-control me-2" placeholder="Search by title, content, or author..." th:value="${query}">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </form>
-                        <h5>Search by Keyword (Title, Subtitle, Author, Category)</h5>
-                        <form th:action="@{/articles/search}" method="get" class="d-flex">
-                            <input type="text" name="keyword" class="form-control me-2" placeholder="Search by keyword across all fields...">
-                            <button type="submit" class="btn btn-secondary">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <p th:text="'Articles found: ' + ${articles.size()}"></p>
-                <div class="row">
-                    <div th:each="article : ${articles}" class="col-md-4 mb-4">
-                        <div class="card h-100 d-flex flex-column" style="height: 700px;">
-                            <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Immagine di default"/>
-                            <img th:if="${article.image != null}" th:src="${article.image.path}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Immagine articolo"/>
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${article.title}"></h5>
-                                <p class="card-text" th:text="${article.user.username}"></p>
-                            </div>
-                            <div class="card-footer">
-                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-dark">Read</a>
-                            </div>
+            
+            <header class="section-header">
+                <h1 class="section-header__title" th:text="${title}">Index articoli</h1>
+            </header>
+            
+            <!-- Search Forms -->
+            <div class="search-section">
+                <div class="search-forms">
+                    <div class="search-forms-grid">
+                        <div class="search-form-container">
+                            <h3>Search by Title, Content, or Author</h3>
+                            <form th:action="@{/articles}" method="get" class="form-search">
+                                <input type="text" name="q" class="form-search__input" placeholder="Search by title, content, or author..." th:value="${query}">
+                                <button type="submit" class="button button--primary form-search__button">Search</button>
+                            </form>
+                        </div>
+                        <div class="search-form-container">
+                            <h3>Search by Keyword (Title, Subtitle, Author, Category)</h3>
+                            <form th:action="@{/articles/search}" method="get" class="form-search">
+                                <input type="text" name="keyword" class="form-search__input" placeholder="Search by keyword across all fields...">
+                                <button type="submit" class="button button--secondary form-search__button">Search</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center" th:unless="${articles.size() > 0}">
-                    <div class="col-10 mb-5">
-                        <h3 class="text-center">NESSUN ARTICOLO PRESENTE</h3>
+            </div>
+            
+            <p class="result-count" th:text="'Articles found: ' + ${articles.size()}"></p>
+            
+            <div class="articles-grid">
+                <article class="article-card" th:each="article : ${articles}">
+                    <figure class="article-card__figure">
+                        <img th:if="${article.image == null}" th:src="@{/images/default.jpg}" class="article-card__image" alt="Default article image"/>
+                        <img th:if="${article.image != null}" th:src="${article.image.path}" class="article-card__image" alt="Article image"/>
+                    </figure>
+                    <div class="article-card__content">
+                        <h2 class="article-card__title" th:text="${article.title}">Title</h2>
+                        <p class="article-card__author" th:text="${article.user.username}">Author</p>
                     </div>
-                </div>
+                    <footer class="article-card__footer">
+                        <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="button button--dark button--full-width">Read</a>
+                    </footer>
+                </article>
+            </div>
+            
+            <div class="empty-state" th:unless="${articles.size() > 0}">
+                <h3 class="empty-state__title">NESSUN ARTICOLO PRESENTE</h3>
             </div>
         </div>
-    </div>
+    </section>
+    
     <div th:replace="~{index :: footer}"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

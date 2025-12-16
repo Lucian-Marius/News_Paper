@@ -10,68 +10,71 @@
 
     <nav th:insert="~{index :: nav}"></nav>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center" th:text="${title}">Edit Article</h3>
-                    </div>
-                    <div class="card-body">
+    <div class="form-container">
+        <div class="page-container">
+            <div class="form-wrapper">
+                <div class="page-header">
+                    <h1>Edit Article</h1>
+                </div>
+                <a href="/writer/dashboard" class="button button--secondary button--small back-button">
+                    ← Back to Dashboard
+                </a>
+                <div class="form-card">
+                    <div class="form-card__body">
                         <form th:action="@{'/articles/update/' + ${article.id}}" th:object="${article}" method="post" enctype="multipart/form-data">
                             <!-- Article Title -->
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Article Title</label>
+                            <div class="form-field">
+                                <label for="title" class="form-field__label">Article Title</label>
                                 <input type="text"
-                                    class="form-control"
+                                    class="form-field__input"
                                     id="title"
                                     th:field="*{title}"
                                     placeholder="Enter article title"
                                     required>
                                 <div th:if="${#fields.hasErrors('title')}"
-                                  class="text-danger"
+                                  class="form-field__error"
                                   th:errors="*{title}"></div>
                             </div>
 
                             <!-- Article Subtitle -->
-                            <div class="mb-3">
-                                <label for="subtitle" class="form-label">Subtitle</label>
+                            <div class="form-field">
+                                <label for="subtitle" class="form-field__label">Subtitle</label>
                                 <input type="text"
-                                    class="form-control"
+                                    class="form-field__input"
                                     id="subtitle"
                                     th:field="*{subtitle}"
                                     placeholder="Enter article subtitle"
                                     required>
                                 <div th:if="${#fields.hasErrors('subtitle')}"
-                                  class="text-danger"
+                                  class="form-field__error"
                                   th:errors="*{subtitle}"></div>
                             </div>
 
                             <!-- Image Upload -->
-                            <div class="mb-3">
-                                <label for="file" class="form-label">Upload New Image (optional)</label>
-                                <input type="file" class="form-control" id="file" name="file" accept="image/*">
-                                <small class="form-text text-muted">Leave empty to keep current image</small>
+                            <div class="form-field">
+                                <label for="file" class="form-field__label">Upload New Image (optional)</label>
+                                <input type="file" class="form-field__input" id="file" name="file" accept="image/*">
+                                <small class="text-muted">Leave empty to keep current image</small>
                             </div>
 
                             <!-- Article Content -->
-                            <div class="mb-3">
-                                <label for="body" class="form-label">Article Content</label>
-                                <textarea class="form-control"
+                            <div class="form-field">
+                                <label for="body" class="form-field__label">Article Content</label>
+                                <textarea class="form-field__textarea"
                                           id="body"
                                           th:field="*{body}"
                                           rows="8"
                                           placeholder="Write your article content here..."
                                           required></textarea>
                                 <div th:if="${#fields.hasErrors('body')}"
-                                     class="text-danger"
+                                     class="form-field__error"
                                      th:errors="*{body}"></div>
                             </div>
 
                             <!-- Category Selection -->
-                            <div class="mb-3">
-                                <label for="category" class="form-label">Category</label>
-                                <select class="form-select"
+                            <div class="form-field">
+                                <label for="category" class="form-field__label">Category</label>
+                                <select class="form-field__select"
                                         id="category"
                                         th:field="*{category}"
                                         required>
@@ -83,27 +86,27 @@
                                     </option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('category')}"
-                                     class="text-danger"
+                                     class="form-field__error"
                                      th:errors="*{category}"></div>
                             </div>
 
                             <!-- Publish Date -->
-                            <div class="mb-3">
-                                <label for="publishDate" class="form-label">Publish Date</label>
+                            <div class="form-field">
+                                <label for="publishDate" class="form-field__label">Publish Date</label>
                                 <input type="date"
-                                       class="form-control"
+                                       class="form-field__input"
                                        id="publishDate"
                                        th:field="*{publishDate}"
                                        required>
                                 <div th:if="${#fields.hasErrors('publishDate')}"
-                                     class="text-danger"
+                                     class="form-field__error"
                                      th:errors="*{publishDate}"></div>
                             </div>
 
                             <!-- Submit Buttons -->
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a th:href="@{/articles}" class="btn btn-secondary me-md-2">Cancel</a>
-                                <button type="submit" class="btn btn-primary">
+                            <div class="form-actions">
+                                <a th:href="@{/articles}" class="button button--secondary">Cancel</a>
+                                <button type="submit" class="button button--primary">
                                     <i class="fas fa-save"></i> Update Article
                                 </button>
                             </div>

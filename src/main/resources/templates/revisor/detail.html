@@ -10,102 +10,94 @@
     <div th:replace="~{index :: nav}"></div>
 
     <!-- Main Container -->
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <!-- Sidebar Navigation -->
-            <div class="col-md-3">
-                <div class="list-group sticky-top">
-                    <a href="/revisor/dashboard" class="list-group-item list-group-item-action">
+    <div class="dashboard-container">
+        <div class="page-container">
+            <!-- Main Content -->
+            <div>
+                <!-- Header -->
+                <div>
+                    <h1 th:text="${article.isAccepted == null ? 'Article Review' : 'Article Details'}">Article Review</h1>
+                    <p class="text-muted" th:text="${article.isAccepted == null ? 'Review and decide on this pending article' : 'View the details of this processed article'}">Review and decide on this pending article</p>
+                    <a href="/revisor/dashboard" class="button button--secondary button--small back-button">
                         ← Back to Dashboard
                     </a>
-                    <a href="#article-details" class="list-group-item list-group-item-action active">
-                        📄 Article Details
-                    </a>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="col-md-9">
-                <!-- Header -->
-                <div class="mb-4">
-                    <h1 class="mb-2" th:text="${article.isAccepted == null ? 'Article Review' : 'Article Details'}">Article Review</h1>
-                    <p class="text-muted" th:text="${article.isAccepted == null ? 'Review and decide on this pending article' : 'View the details of this processed article'}">Review and decide on this pending article</p>
                 </div>
 
                 <!-- Article Details Section -->
-                <div id="article-details" class="card mb-4">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">📄 Article Details</h5>
-                    </div>
-                    <div class="card-body">
-                        <!-- Article Image -->
-                        <div th:if="${article.image != null}" class="mb-4 text-center">
-                            <img th:src="${article.image.path}" alt="Article Image" class="img-fluid rounded" style="max-height: 300px;">
+                <div id="article-details" class="dashboard-card">
+                        <div class="dashboard-card__header dashboard-card__header--info">
+                            <h5 class="dashboard-card__title">Article Details</h5>
                         </div>
-
-                        <!-- Article Title -->
-                        <div class="mb-3">
-                            <h3 class="card-title" th:text="${article.title}">Article Title</h3>
-                        </div>
-
-                        <!-- Article Subtitle -->
-                        <div class="mb-3">
-                            <h4 class="text-muted" th:text="${article.subtitle}">Article Subtitle</h4>
-                        </div>
-
-                        <!-- Article Metadata -->
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <strong>Author:</strong>
-                                <span th:text="${article.user != null ? article.user.username : 'Unknown'}">Author Name</span>
+                        <div class="dashboard-card__body">
+                            <!-- Article Image -->
+                            <div th:if="${article.image != null}" class="review-detail__image-wrapper">
+                                <img th:src="${article.image.path}" alt="Article Image" class="review-detail__image">
                             </div>
-                            <div class="col-md-6">
-                                <strong>Category:</strong>
-                                <span th:text="${article.category != null ? article.category.name : 'No Category'}">Category Name</span>
+
+                            <!-- Article Title -->
+                            <div class="review-detail">
+                                <h3 class="review-detail__title" th:text="${article.title}">Article Title</h3>
                             </div>
-                        </div>
 
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <strong>Publish Date:</strong>
-                                <span th:text="${#temporals.format(article.publishDate, 'dd/MM/yyyy HH:mm')}">01/01/2024</span>
+                            <!-- Article Subtitle -->
+                            <div>
+                                <h4 class="review-detail__subtitle" th:text="${article.subtitle}">Article Subtitle</h4>
                             </div>
-                            <div class="col-md-6">
-                                <strong>Status:</strong>
-                                <span th:if="${article.isAccepted == null}" class="badge bg-warning">Pending Review</span>
-                                <span th:if="${article.isAccepted == true}" class="badge bg-success">✓ Accepted</span>
-                                <span th:if="${article.isAccepted == false}" class="badge bg-danger">✕ Rejected</span>
+
+                            <!-- Article Metadata -->
+                            <div class="review-detail__metadata">
+                                <div class="review-detail__metadata-item">
+                                    <strong>Author:</strong>
+                                    <span th:text="${article.user != null ? article.user.username : 'Unknown'}">Author Name</span>
+                                </div>
+                                <div class="review-detail__metadata-item">
+                                    <strong>Category:</strong>
+                                    <span th:text="${article.category != null ? article.category.name : 'No Category'}">Category Name</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Article Body -->
-                        <div class="mb-4">
-                            <h5>Content:</h5>
-                            <div class="border p-3 bg-light" style="white-space: pre-line;" th:text="${article.body}">
-                                Article content goes here...
+                            <div class="review-detail__metadata">
+                                <div class="review-detail__metadata-item">
+                                    <strong>Publish Date:</strong>
+                                    <span th:text="${#temporals.format(article.publishDate, 'dd/MM/yyyy HH:mm')}">01/01/2024</span>
+                                </div>
+                                <div class="review-detail__metadata-item">
+                                    <strong>Status:</strong>
+                                    <span th:if="${article.isAccepted == null}" class="text-badge text-badge--warning">Pending Review</span>
+                                    <span th:if="${article.isAccepted == true}" class="text-badge text-badge--success">Accepted</span>
+                                    <span th:if="${article.isAccepted == false}" class="text-badge text-badge--danger">Rejected</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Action Buttons -->
-                        <div th:if="${article.isAccepted == null}" class="d-flex justify-content-center gap-3">
-                            <form th:action="@{/articles/revisor/handle/{id}(id=${article.id})}" method="post" class="d-inline">
-                                <input type="hidden" name="action" value="accept">
-                                <button type="submit" class="btn btn-success btn-lg">
-                                    ✓ Accept Article
-                                </button>
-                            </form>
+                            <!-- Article Body -->
+                            <div class="review-detail__content-section">
+                                <h5>Content:</h5>
+                                <div class="review-detail__content-box" th:text="${article.body}">
+                                    Article content goes here...
+                                </div>
+                            </div>
 
-                            <form th:action="@{/articles/revisor/handle/{id}(id=${article.id})}" method="post" class="d-inline">
-                                <input type="hidden" name="action" value="reject">
-                                <button type="submit" class="btn btn-danger btn-lg">
-                                    ✕ Reject Article
-                                </button>
-                            </form>
-                        </div>
+                            <!-- Action Buttons -->
+                            <div th:if="${article.isAccepted == null}" class="review-detail__actions">
+                                <form th:action="@{/articles/revisor/handle/{id}(id=${article.id})}" method="post">
+                                    <input type="hidden" name="action" value="accept">
+                                    <button type="submit" class="button button--success">
+                                        Accept Article
+                                    </button>
+                                </form>
 
-                        <!-- Processed Article Message -->
-                        <div th:if="${article.isAccepted != null}" class="text-center">
-                            <p class="text-muted">This article has already been processed.</p>
+                                <form th:action="@{/articles/revisor/handle/{id}(id=${article.id})}" method="post">
+                                    <input type="hidden" name="action" value="reject">
+                                    <button type="submit" class="button button--danger">
+                                        Reject Article
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Processed Article Message -->
+                            <div th:if="${article.isAccepted != null}" class="text-center">
+                                <p class="text-muted">This article has already been processed.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

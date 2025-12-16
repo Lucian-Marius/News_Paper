@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- //create a new category -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{index :: head}">
     <meta charset="UTF-8">
@@ -8,40 +7,47 @@
 </head>
 <body>
     <header th:insert="~{index :: header}"></header>
+    <nav th:replace="~{index :: nav}"></nav>
 
-    <nav th:insert="~{index :: nav}"></nav>
-
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Create New Category</h3>
+    <section class="form-container">
+        <div class="page-container">
+            <div class="form-wrapper form-wrapper--narrow">
+                <div class="page-header">
+                    <h1>Create New Category</h1>
+                </div>
+                <p class="text-muted section-subtitle">Add a new category for organizing articles</p>
+                
+                <div class="form-card">
+                    <div class="form-card__header">
+                        <h3 class="form-card__title">Category Information</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="form-card__body">
                         <form th:action="@{/categories}" th:object="${category}" method="post">
                             <!-- Category Name -->
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Category Name</label>
+                            <div class="form-field">
+                                <label for="name" class="form-field__label">Category Name</label>
                                 <input type="text" 
-                                    class="form-control" 
+                                    class="form-field__input" 
                                     id="name" 
                                     th:field="*{name}" 
                                     placeholder="Enter category name" 
                                     required>
                                 <div th:if="${#fields.hasErrors('name')}" 
-                                  class="text-danger" 
+                                  class="form-field__error" 
                                   th:errors="*{name}"></div>
                             </div>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Create Category</button>
+                            <div class="form-actions">
+                                <a href="/admin/dashboard" class="button button--secondary">Cancel</a>
+                                <button type="submit" class="button button--primary">Create Category</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <footer th:insert="~{index :: footer}"></footer>
+    <footer th:replace="~{index :: footer}"></footer>
+</body>
+</html>

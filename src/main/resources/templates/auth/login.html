@@ -10,53 +10,53 @@
     
     <nav th:replace="~{index :: nav}"></nav>
     
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Login</h3>
+    <div class="form-container">
+        <div class="page-container">
+            <div class="form-wrapper form-wrapper--narrow">
+                <div class="form-card">
+                    <div class="form-card__header">
+                        <h3 class="form-card__title">Login</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="form-card__body">
                         <!-- Login Error Message -->
-                        <div th:if="${param.error}" class="alert alert-danger">
+                        <div th:if="${param.error}" class="alert alert--danger">
                             Invalid username or password!
                         </div>
                         
                         <!-- Logout Success Message -->
-                        <div th:if="${param.logout}" class="alert alert-success">
+                        <div th:if="${param.logout}" class="alert alert--success">
                             You have been logged out successfully!
                         </div>
                         
                         <!-- Session Expired Message -->
-                        <div th:if="${param['session-expired']}" class="alert alert-warning">
+                        <div th:if="${param['session-expired']}" class="alert alert--warning">
                             Your session has expired. Please login again.
                         </div>
                         
                         <form th:action="@{/auth/login}" method="post">
-                            <div class="form-group mb-3">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="form-field">
+                                <label for="username" class="form-field__label">Username</label>
+                                <input type="text" class="form-field__input" id="username" name="username" required>
                             </div>
                             
-                            <div class="form-group mb-3">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="form-field">
+                                <label for="password" class="form-field__label">Password</label>
+                                <input type="password" class="form-field__input" id="password" name="password" required>
                             </div>
                             
-                            <div class="form-group mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                                    <label class="form-check-label" for="remember-me">Remember me</label>
+                            <div class="form-field">
+                                <div class="form-field__checkbox-wrapper">
+                                    <input type="checkbox" class="form-field__checkbox" id="remember-me" name="remember-me">
+                                    <label class="form-field__label" for="remember-me">Remember me</label>
                                 </div>
                             </div>
                             
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            <div class="form-field">
+                                <button type="submit" class="button button--primary button--full-width">Login</button>
                             </div>
                         </form>
                         
-                        <div class="text-center mt-3">
+                        <div class="text-center">
                             <p>Don't have an account? <a th:href="@{/auth/register}">Register here</a></p>
                         </div>
                     </div>
