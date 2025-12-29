@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Art Marketplace Tutorial - Spring Boot 3.3.4 & Java 21</title>
+    <style>
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            font-size: 16px;
+        }
+        .header { 
+            background: purple; 
+            color: white; 
+            padding: 20px; 
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+        .container { 
+            display: flex; 
+        }
+        .sidebar { 
+            width: 280px; 
+            background: #f0f0f0; 
+            padding: 20px; 
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar h3 {
+            color: purple;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            border-bottom: 2px solid purple;
+            padding-bottom: 5px;
+        }
+        .nav-item { 
+            padding: 10px; 
+            margin: 5px 0; 
+            background: white; 
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .nav-item:hover { 
+            background: #e0e0e0; 
+            transform: translateX(5px);
+        }
+        .nav-item.active { 
+            background: purple; 
+            color: white; 
+            font-weight: bold;
+        }
+        .content { 
+            padding: 30px; 
+            flex: 1;
+            max-width: 1000px;
+        }
+        .module { 
+            display: none; 
+        }
+        .module.active { 
+            display: block; 
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: purple;
+            border-bottom: 3px solid purple;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            color: #6a0dad;
+            margin-top: 25px;
+        }
+        pre { 
+            background: black; 
+            color: lime; 
+            padding: 15px; 
+            overflow-x: auto;
+            border-radius: 5px;
+            line-height: 1.4;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        th, td { 
+            padding: 12px; 
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th { 
+            background: purple; 
+            color: white; 
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .box { 
+            background: lightblue; 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-left: 4px solid blue; 
+            border-radius: 4px;
+        }
+        .box h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        .box ul {
+            margin: 10px 0;
+        }
+        ol, ul {
+            line-height: 1.8;
+        }
+        p {
+            line-height: 1.6;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 Digital Art Marketplace Tutorial</h1>
+        <p>Build a Complete Marketplace for 3D Models, Textures & Digital Assets</p>
+        <p><strong>Spring Boot 3.3.4 | Java 21 | MySQL | Thymeleaf | Supabase</strong></p>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>📚 PART 1: FOUNDATION</h3>
+            <div class="nav-item active" onclick="show(1)">01. Environment Setup</div>
+            <div class="nav-item" onclick="show(2)">02. Spring Boot Project</div>
+            <div class="nav-item" onclick="show(3)">03. Database Design</div>
+            
+            <h3>🏗️ PART 2: CORE</h3>
+            <div class="nav-item" onclick="show(4)">04. User & Role Entities</div>
+            <div class="nav-item" onclick="show(5)">05. Product & Category</div>
+            <div class="nav-item" onclick="show(6)">06. Cart & Order Entities</div>
+            <div class="nav-item" onclick="show(7)">07. Review & Image Entities</div>
+            <div class="nav-item" onclick="show(8)">08. Repositories</div>
+            
+            <h3>💼 PART 3: BUSINESS LOGIC</h3>
+            <div class="nav-item" onclick="show(9)">09. DTOs & ModelMapper</div>
+            <div class="nav-item" onclick="show(10)">10. User Service</div>
+            <div class="nav-item" onclick="show(11)">11. Product Service</div>
+            <div class="nav-item" onclick="show(12)">12. Cart & Order Services</div>
+            
+            <h3>🔐 PART 4: SECURITY & WEB</h3>
+            <div class="nav-item" onclick="show(13)">13. Spring Security Config</div>
+            <div class="nav-item" onclick="show(14)">14. Custom UserDetails</div>
+            <div class="nav-item" onclick="show(15)">15. Auth Controllers</div>
+            <div class="nav-item" onclick="show(16)">16. Product Controllers</div>
+            <div class="nav-item" onclick="show(17)">17. Cart & Checkout</div>
+            
+            <h3>🎨 PART 5: FRONTEND</h3>
+            <div class="nav-item" onclick="show(18)">18. Thymeleaf Setup</div>
+            <div class="nav-item" onclick="show(19)">19. Template Fragments</div>
+            <div class="nav-item" onclick="show(20)">20. Home & Product List</div>
+            <div class="nav-item" onclick="show(21)">21. Product Detail Page</div>
+            <div class="nav-item" onclick="show(22)">22. User Dashboard</div>
+            <div class="nav-item" onclick="show(23)">23. Seller Dashboard</div>
+            <div class="nav-item" onclick="show(24)">24. Admin Dashboard</div>
+            
+            <h3>⚡ PART 6: ADVANCED</h3>
+            <div class="nav-item" onclick="show(25)">25. File Upload (Supabase)</div>
+            <div class="nav-item" onclick="show(26)">26. Email Service</div>
+            <div class="nav-item" onclick="show(27)">27. Search & Filters</div>
+            <div class="nav-item" onclick="show(28)">28. Reviews System</div>
+            <div class="nav-item" onclick="show(29)">29. Download Manager</div>
+            <div class="nav-item" onclick="show(30)">30. Seller Request Flow</div>
+            
+            <h3>🚀 PART 7: WORKFLOWS</h3>
+            <div class="nav-item" onclick="show(31)">31. Product Approval</div>
+            <div class="nav-item" onclick="show(32)">32. Purchase Flow</div>
+            <div class="nav-item" onclick="show(33)">33. Notification System</div>
+            
+            <h3>✅ PART 8: DEPLOYMENT</h3>
+            <div class="nav-item" onclick="show(34)">34. Testing</div>
+            <div class="nav-item" onclick="show(35)">35. Production Config</div>
+            <div class="nav-item" onclick="show(36)">36. Deployment</div>
+        </div>
+
+        <div class="content">
+            
+            <!-- MODULE 1 -->
+            <div class="module active" id="m1">
+                <h2>Module 1: Environment Setup</h2>
+                
+                <div class="box">
+                    <h3>📋 What You'll Learn:</h3>
+                    <ul>
+                        <li>Install Java 21 (LTS version)</li>
+                        <li>Install Maven build tool</li>
+                        <li>Setup MySQL 8.0 database</li>
+                        <li>Install IntelliJ IDEA Community Edition</li>
+                        <li>Setup Supabase for cloud storage</li>
+                        <li>Setup Mailtrap for email testing</li>
+                    </ul>
+                    <p><strong>⏱️ Time needed:</strong> 1-2 hours | <strong>Difficulty:</strong> Beginner</p>
+                </div>
+
+                <h3>Why This Setup?</h3>
+                <p>We're building a professional digital marketplace. Here's why we chose these technologies:</p>
+                <ul>
+                    <li><strong>Java 21:</strong> Latest LTS with improved performance and modern features</li>
+                    <li><strong>Spring Boot 3.3.4:</strong> Industry-standard framework for Java web apps</li>
+                    <li><strong>MySQL:</strong> Reliable, scalable relational database</li>
+                    <li><strong>Supabase:</strong> Free cloud storage for product files (Blender models, textures)</li>
+                    <li><strong>Mailtrap:</strong> Safe email testing without sending to real addresses</li>
+                </ul>
+
+                <h3>Step 1: Install Java 21</h3>
+                <p><strong>Windows:</strong></p>
+                <ol>
+                    <li>Go to: <code>https://www.oracle.com/java/technologies/downloads/#java21</code></li>
+                    <li>Download "Windows x64 Installer"</li>
+                    <li>Run the installer and follow prompts</li>
+                    <li>Add to PATH if not automatic</li>
+                </ol>
+                
+                <p><strong>macOS:</strong></p>
+                <pre>brew install openjdk@21
+sudo ln -sfn $(brew --prefix)/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk</pre>
+                
+                <p><strong>Linux (Ubuntu/Debian):</strong></p>
+                <pre>sudo apt update
+sudo apt install openjdk-21-jdk</pre>
+                
+                <p><strong>Verify Installation:</strong></p>
+                <pre>java -version</pre>
+                <p>Expected output: <code>java version "21.0.x"</code></p>
+
+                <h3>Step 2: Install Maven</h3>
+                <p><strong>Windows:</strong></p>
+                <ol>
+                    <li>Download from: <code>https://maven.apache.org/download.cgi</code></li>
+                    <li>Extract ZIP to <code>C:\Program Files\Apache\maven</code></li>
+                    <li>Add <code>C:\Program Files\Apache\maven\bin</code> to PATH</li>
+                </ol>
+                
+                <p><strong>macOS:</strong></p>
+                <pre>brew install maven</pre>
+                
+                <p><strong>Linux:</strong></p>
+                <pre>sudo apt install maven</pre>
+                
+                <p><strong>Verify:</strong></p>
+                <pre>mvn -version</pre>
+
+                <h3>Step 3: Install MySQL 8.0</h3>
+                <p><strong>Windows/macOS:</strong></p>
+                <ol>
+                    <li>Download MySQL Community Server from: <code>https://dev.mysql.com/downloads/mysql/</code></li>
+                    <li>Run installer</li>
+                    <li><strong>IMPORTANT:</strong> Remember your root password!</li>
+                    <li>Choose "Use Strong Password Encryption"</li>
+                    <li>Start MySQL Server</li>
+                </ol>
+                
+                <p><strong>Linux:</strong></p>
+                <pre>sudo apt update
+sudo apt install mysql-server
+sudo mysql_secure_installation</pre>
+                
+                <p><strong>Create Database:</strong></p>
+                <pre>mysql -u root -p
+CREATE DATABASE digital_marketplace;
+SHOW DATABASES;
+EXIT;</pre>
+
+                <h3>Step 4: Install IntelliJ IDEA</h3>
+                <ol>
+                    <li>Go to: <code>https://www.jetbrains.com/idea/download/</code></li>
+                    <li>Download <strong>Community Edition</strong> (free)</li>
+                    <li>Install and launch</li>
+                    <li>Skip initial project setup for now</li>
+                </ol>
+
+                <h3>Step 5: Setup Supabase (Cloud Storage)</h3>
+                <ol>
+                    <li>Go to: <code>https://supabase.com</code></li>
+                    <li>Sign up with GitHub (recommended) or email</li>
+                    <li>Click "New Project"</li>
+                    <li>Fill in:
+                        <ul>
+                            <li>Name: <code>digital-marketplace</code></li>
+                            <li>Database Password: <strong>Save this!</strong></li>
+                            <li>Region: Choose closest to you</li>
+                        </ul>
+                    </li>
+                    <li>Wait for project creation (~2 minutes)</li>
+                    <li>Go to <strong>Storage</strong> → Create bucket:
+                        <ul>
+                            <li>Name: <code>product-files</code></li>
+                            <li>Public: ✅ Yes</li>
+                        </ul>
+                    </li>
+                    <li>Create another bucket:
+                        <ul>
+                            <li>Name: <code>product-images</code></li>
+                            <li>Public: ✅ Yes</li>
+                        </ul>
+                    </li>
+                    <li>Go to <strong>Settings</strong> → API → Copy:
+                        <ul>
+                            <li>Project URL</li>
+                            <li>anon/public key</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning">
+                    <strong>⚠️ SAVE YOUR CREDENTIALS:</strong> Store your Supabase URL and API key in a safe place. You'll need them in Module 25.
+                </div>
+
+                <h3>Step 6: Setup Mailtrap (Email Testing)</h3>
+                <ol>
+                    <li>Go to: <code>https://mailtrap.io</code></li>
+                    <li>Sign up for free account</li>
+                    <li>In dashboard, click "Email Testing" → "Inboxes"</li>
+                    <li>Click "My Inbox" or create new inbox</li>
+                    <li>Click "SMTP Settings" → Select "Spring"</li>
+                    <li>Copy these values (you'll need them later):
+                        <ul>
+                            <li>Host: <code>sandbox.smtp.mailtrap.io</code></li>
+                            <li>Port: <code>2525</code></li>
+                            <li>Username: <code>(your username)</code></li>
+                            <li>Password: <code>(your password)</code></li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>🔧 Troubleshooting</h3>
+                <table>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td>"java" not recognized</td>
+                        <td>Add Java bin folder to system PATH and restart terminal</td>
+                    </tr>
+                    <tr>
+                        <td>MySQL won't start</td>
+                        <td>Check if port 3306 is in use: <code>netstat -an | grep 3306</code></td>
+                    </tr>
+                    <tr>
+                        <td>Can't connect to MySQL</td>
+                        <td>Verify service is running: <code>sudo systemctl status mysql</code> (Linux)</td>
+                    </tr>
+                    <tr>
+                        <td>Supabase bucket creation fails</td>
+                        <td>Use only lowercase letters and hyphens in bucket names</td>
+                    </tr>
+                </table>
+
+                <div class="success">
+                    <strong>✅ Module Complete!</strong> Your development environment is ready. Click "02. Spring Boot Project" to continue.
+                </div>
+
+                <h3>📚 Resources</h3>
+                <ul>
+                    <li><a href="https://docs.oracle.com/en/java/javase/21/">Java 21 Documentation</a></li>
+                    <li><a href="https://maven.apache.org/guides/">Maven Getting Started Guide</a></li>
+                    <li><a href="https://dev.mysql.com/doc/">MySQL Documentation</a></li>
+                    <li><a href="https://supabase.com/docs">Supabase Documentation</a></li>
+                </ul>
+            </div>
+
+            <!-- MODULE 2 -->
+            <div class="module" id="m2">
+                <h2>Module 2: Create Spring Boot Project</h2>
+                
+                <div class="box">
+                    <h3>📋 What You'll Learn:</h3>
+                    <ul>
+                        <li>Use Spring Initializr to create project</li>
+                        <li>Configure pom.xml dependencies</li>
+                        <li>Setup application.properties</li>
+                        <li>Create your first controller</li>
+                        <li>Run the application</li>
+                    </ul>
+                    <p><strong>⏱️ Time needed:</strong> 45-60 minutes | <strong>Difficulty:</strong> Beginner</p>
+                </div>
+
+                <h3>Understanding Spring Boot</h3>
+                <p>Spring Boot is a framework that simplifies Java web development. It provides:</p>
+                <ul>
+                    <li><strong>Auto-configuration:</strong> Smart defaults to get started quickly</li>
+                    <li><strong>Embedded server:</strong> No need to install Tomcat separately</li>
+                    <li><strong>Production-ready:</strong> Built-in health checks and monitoring</li>
+                    <li><strong>Convention over configuration:</strong> Less boilerplate code</li>
+                </ul>
+
+                <h3>Step 1: Generate Project with Spring Initializr</h3>
+                <ol>
+                    <li>Go to: <code>https://start.spring.io</code></li>
+                    <li>Configure project settings:</li>
+                </ol>
+
+                <table>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                        <th>Why?</th>
+                    </tr>
+                    <tr>
+                        <td>Project</td>
+                        <td>Maven</td>
+                        <td>Build tool and dependency manager</td>
+                    </tr>
+                    <tr>
+                        <td>Language</td>
+                        <td>Java</td>
+                        <td>Our programming language</td>
+                    </tr>
+                    <tr>
+                        <td>Spring Boot</td>
+                        <td>3.3.4</td>
+                        <td>Latest stable version</td>
+                    </tr>
+                    <tr>
+                        <td>Group</td>
+                        <td>com.marketplace</td>
+                        <td>Your organization namespace</td>
+                    </tr>
+                    <tr>
+                        <td>Artifact</td>
+                        <td>digital_marketplace</td>
+                        <td>Project name</td>
+                    </tr>
+                    <tr>
+                        <td>Packaging</td>
+                        <td>Jar</td>
+                        <td>Executable JAR file</td>
+                    </tr>
+                    <tr>
+                        <td>Java</td>
+                        <td>21</td>
+                        <td>Latest LTS version</td>
+                    </tr>
+                </table>
+
+                <h3>Step 2: Add Dependencies</h3>
+                <p>Click "ADD DEPENDENCIES" and add these (use search):</p>
+                <ul>
+                    <li><strong>Spring Web</strong> - REST API and web controllers</li>
+                    <li><strong>Spring Data JPA</strong> - Database access with Hibernate</li>
+                    <li><strong>Spring Security</strong> - Authentication and authorization</li>
+                    <li><strong>Thymeleaf</strong> - Server-side HTML templates</li>
+                    <li><strong>MySQL Driver</strong> - MySQL database connector</li>
+                    <li><strong>Lombok</strong> - Reduce boilerplate code (getters/setters)</li>
+                    <li><strong>Validation</strong> - Bean validation annotations</li>
+                    <li><strong>Spring Boot DevTools</strong> - Auto-restart on code changes</li>
+                    <li><strong>Java Mail Sender</strong> - Send emails</li>
+                </ul>
+
+                <p>Click <strong>GENERATE</strong> button to download ZIP file.</p>
+
+                <h3>Step 3: Import Project into IntelliJ</h3>
+                <ol>
+                    <li>Extract the downloaded ZIP file</li>
+                    <li>Open IntelliJ IDEA</li>
+                    <li>Click "Open" and select the extracted folder</li>
+                    <li>Wait for Maven to download dependencies (check progress bar at bottom)</li>
+                    <li>If prompted, trust the project</li>
+                </ol>
+
+                <h3>Step 4: Configure application.properties</h3>
+                <p>Navigate to: <code>src/main/resources/application.properties</code></p>
+                <p>Replace content with:</p>
+
+                <pre># Server Configuration
+server.port=8080
+
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/digital_marketplace
+spring.datasource.username=root
+spring.datasource.password=YOUR_MYSQL_PASSWORD_HERE
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA/Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.properties.hibernate.format_sql=true
+
+# Thymeleaf Configuration
+spring.thymeleaf.cache=false
+
+# File Upload Configuration
+spring.servlet.multipart.max-file-size=100MB
+spring.servlet.multipart.max-request-size=100MB
+
+# Logging
+logging.level.org.springframework.security=DEBUG
+logging.level.com.marketplace=DEBUG</pre>
+
+                <div class="warning">
+                    <strong>⚠️ IMPORTANT:</strong> Replace <code>YOUR_MYSQL_PASSWORD_HERE</code> with your actual MySQL root password!
+                </div>
+
+                <h3>Understanding application.properties</h3>
+                <ul>
+                    <li><code>spring.datasource.url</code> - Database connection string</li>
+                    <li><code>spring.jpa.hibernate.ddl-auto=update</code> - Auto-create/update tables</li>
+                    <li><code>spring.jpa.show-sql=true</code> - Log SQL queries for debugging</li>
+                    <li><code>spring.servlet.multipart.max-file-size=100MB</code> - Allow large file uploads</li>
+                </ul>
+
+                <h3>Step 5: Create Your First Controller</h3>
+                <p>Create package: <code>src/main/java/com/marketplace/digital_marketplace/controllers</code></p>
+                <p>Create file: <code>HomeController.java</code></p>
+
+                <pre>package com.marketplace.digital_marketplace.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * HomeController handles requests to the home page
+ */
+@Controller
+public class HomeController {
+    
+    /**
+     * Handle GET requests to root URL "/"
+     * @return Welcome message
+     */
+    @GetMapping("/")
+    @ResponseBody
+    public String home() {
+        return "🎨 Welcome to Digital Art Marketplace! 🚀";
+    }
+    
+    /**
+     * Health check endpoint
+     * @return Status message
+     */
+    @GetMapping("/health")
+    @ResponseBody
+    public String health() {
+        return "✅ Application is running!";
+    }
+}</pre>
+
+                <h3>Understanding the Annotations</h3>
+                <ul>
+                    <li><code>@Controller</code> - Marks class as Spring MVC controller</li>
+                    <li><code>@GetMapping("/")</code> - Maps HTTP GET requests to method</li>
+                    <li><code>@ResponseBody</code> - Returns text directly (not a view name)</li>
+                </ul>
+
+                <h3>Step 6: Disable Security Temporarily</h3>
+                <p>Create: <code>src/main/java/com/marketplace/digital_marketplace/config/SecurityConfig.java</code></p>
+
+                <pre>package com.marketplace.digital_marketplace.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+/**
+ * Temporary security config - permits all requests
+ * We'll configure proper security in Module 13
+ */
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            );
+        return http.build();
+    }
+}</pre>
+
+                <h3>Step 7: Run the Application</h3>
+                <p><strong>Method 1: Using IntelliJ</strong></p>
+                <ol>
+                    <li>Find <code>DigitalMarketplaceApplication.java</code> in <code>src/main/java/com/marketplace/digital_marketplace/</code></li>
+                    <li>Right-click the file</li>
+                    <li>Select "Run 'DigitalMarketplaceApplication'"</li>
+                </ol>
+
+                <p><strong>Method 2: Using Terminal</strong></p>
+                <pre>cd digital_marketplace
+mvn spring-boot:run</pre>
+
+                <p><strong>Expected Console Output:</strong></p>
+                <pre>  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.3.4)
+
+...
+Started DigitalMarketplaceApplication in 3.456 seconds</pre>
+
+                <h3>Step 8: Test the Application</h3>
+                <ol>
+                    <li>Open browser and go to: <code>http://localhost:8080</code></li>
+                    <li>You should see: <code>🎨 Welcome to Digital Art Marketplace! 🚀</code></li>
+                    <li>Try: <code>http://localhost:8080/health</code></li>
+                    <li>You should see: <code>✅ Application is running!</code></li>
+                </ol>
+
+                <div class="success">
+                    <strong>🎉 Congratulations!</strong> Your Spring Boot application is running!
+                </div>
+
+                <h3>🔧 Common Errors and Solutions</h3>
+                <table>
+                    <tr>
+                        <th>Error</th>
+                        <th>Cause</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td>Port 8080 already in use</td>
+                        <td>Another app using port 8080</td>
+                        <td>Change to <code>server.port=8081</code> in properties</td>
+                    </tr>
+                    <tr>
+                        <td>Cannot connect to database</td>
+                        <td>MySQL not running</td>
+                        <td>Start MySQL service</td>
+                    </tr>
+                    <tr>
+                        <td>Access denied for user 'root'</td>
+                        <td>Wrong password</td>
+                        <td>Check MySQL password in application.properties</td>
+                    </tr>
+                    <tr>
+                        <td>ClassNotFoundException: lombok</td>
+                        <td>Lombok not installed</td>
+                        <td>Enable annotation processing in IntelliJ</td>
+                    </tr>
+                </table>
+
+                <h3>Project Structure Overview</h3>
+                <pre>digital_marketplace/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/marketplace/digital_marketplace/
+│   │   │       ├── controllers/      (Web layer)
+│   │   │       ├── services/         (Business logic)
+│   │   │       ├── repositories/     (Data access)
+│   │   │       ├── models/           (Entities)
+│   │   │       ├── dtos/             (Data transfer objects)
+│   │   │       └── config/           (Configuration)
+│   │   └── resources/
+│   │       ├── templates/            (HTML views)
+│   │       ├── static/               (CSS, JS, images)
+│   │       └── application.properties
+│   └── test/                         (Unit tests)
+├── pom.xml                           (Dependencies)
+└── mvnw                              (Maven wrapper)</pre>
+
+                <div class="success">
+                    <strong>✅ Module Complete!</strong> Your project structure is ready. Click "03. Database Design" to continue.
+                </div>
+
+                <h3>📚 Resources</h3>
+                <ul>
+                    <li><a href="https://spring.io/guides/gs/spring-boot/">Spring Boot Getting Started</a></li>
+                    <li><a href="https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/">Spring Boot Reference</a></li>
+                    <li><a href="https://maven.apache.org/pom.html">Maven POM Reference</a></li>
+                </ul>
+            </div>
+
+            <!-- MODULE 3 -->
+            <div class="module" id="m3">
+                <h2>Module 3: Database Design & ERD</h2>
+                
+                <div class="box">
+                    <h3>📋 What You'll Learn:</h3>
+                    <ul>
+                        <li>Design a complete marketplace database</li>
+                        <li>Understand Entity Relationship Diagrams (ERD)</li>
+                        <li>Define tables and relationships</li>
+                        <li>Learn about primary keys and foreign keys</li>
+                        <li>Plan for scalability</li>
+                    </ul>
+                    <p><strong>⏱️ Time needed:</strong> 1 hour | <strong>Difficulty:</strong> Beginner</p>
+                </div>
+
+                <h3>What is a Database?</h3>
+                <p>A database stores information in organized tables (like Excel spreadsheets). Each table represents a type of data.</p>
+
+                <h3>Key Database Concepts</h3>
+                <table>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Table</strong></td>
+                        <td>Collection of related data</td>
+                        <td>"users" table stores all users</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Row (Record)</strong></td>
+                        <td>One piece of data</td>
+                        <td>One user: "john_doe"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Column (Field)</strong></td>
+                        <td>One type of information</td>
+                        <td>"email" column</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Key</strong></td>
+                        <td>Unique identifier (usually <code>id</code>)</td>
+                        <td>user_id = 1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Foreign Key</strong></td>
+                        <td>Reference to another table</td>
+                        <td>product.seller_id → user.id</td>
+                    </tr>
+                </table>
+
+                <h3>Our Database Tables (11 Total)</h3>
+
+                <h4>👤 1. users - User Accounts</h4>
+                <p>Stores customer, seller, and admin information.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique user ID</td>
+                    </tr>
+                    <tr>
+                        <td>username</td>
+                        <td>VARCHAR(50)</td>
+                        <td>Login username (unique)</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>VARCHAR(100)</td>
+                        <td>Email address (unique)</td>
+                    </tr>
+                    <tr>
+                        <td>password</td>
+                        <td>VARCHAR(255)</td>
+                        <td>Encrypted password (BCrypt)</td>
+                    </tr>
+                    <tr>
+                        <td>full_name</td>
+                        <td>VARCHAR(100)</td>
+                        <td>Display name</td>
+                    </tr>
+                    <tr>
+                        <td>enabled</td>
+                        <td>BOOLEAN</td>
+                        <td>Account active? (default: true)</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>DATETIME</td>
+                        <td>Registration timestamp</td>
+                    </tr>
+                </table>
+
+                <h4>🔐 2. roles - User Roles</h4>
+                <p>Defines permission levels: BUYER, SELLER, MODERATOR, ADMIN.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique role ID</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>VARCHAR(20)</td>
+                        <td>Role name (e.g., "ROLE_BUYER")</td>
+                    </tr>
+                </table>
+
+                <h4>🔗 3. user_roles - Join Table</h4>
+                <p>Links users to their roles (Many-to-Many relationship).</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>user_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>References users.id</td>
+                    </tr>
+                    <tr>
+                        <td>role_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>References roles.id</td>
+                    </tr>
+                </table>
+
+                <h4>📁 4. categories - Product Categories</h4>
+                <p>Organize products (3D Models, Textures, HDRIs, etc.).</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique category ID</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>VARCHAR(50)</td>
+                        <td>Category name</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>VARCHAR(255)</td>
+                        <td>Category description</td>
+                    </tr>
+                </table>
+
+                <h4>🎨 5. products - Digital Assets</h4>
+                <p>The main table storing product information.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique product ID</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>VARCHAR(100)</td>
+                        <td>Product name</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>TEXT</td>
+                        <td>Detailed description</td>
+                    </tr>
+                    <tr>
+                        <td>price</td>
+                        <td>DECIMAL(10,2)</td>
+                        <td>Price in dollars</td>
+                    </tr>
+                    <tr>
+                        <td>file_url</td>
+                        <td>VARCHAR(500)</td>
+                        <td>Supabase download URL</td>
+                    </tr>
+                    <tr>
+                        <td>approved</td>
+                        <td>BOOLEAN</td>
+                        <td>Moderator approved? (default: false)</td>
+                    </tr>
+                    <tr>
+                        <td>download_count</td>
+                        <td>INT</td>
+                        <td>Times downloaded</td>
+                    </tr>
+                    <tr>
+                        <td>seller_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>References users.id</td>
+                    </tr>
+                    <tr>
+                        <td>category_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>References categories.id</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>DATETIME</td>
+                        <td>Upload timestamp</td>
+                    </tr>
+                </table>
+
+                <h4>🖼️ 6. images - Product Images</h4>
+                <p>Multiple preview images per product.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique image ID</td>
+                    </tr>
+                    <tr>
+                        <td>path</td>
+                        <td>VARCHAR(500)</td>
+                        <td>Image URL from Supabase</td>
+                    </tr>
+                    <tr>
+                        <td>is_primary</td>
+                        <td>BOOLEAN</td>
+                        <td>Main thumbnail? (default: false)</td>
+                    </tr>
+                    <tr>
+                        <td>product_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>References products.id</td>
+                    </tr>
+                </table>
+
+                <h4>⭐ 7. reviews - Product Reviews</h4>
+                <p>Customer ratings and comments.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique review ID</td>
+                    </tr>
+                    <tr>
+                        <td>rating</td>
+                        <td>INT</td>
+                        <td>1-5 stars</td>
+                    </tr>
+                    <tr>
+                        <td>comment</td>
+                        <td>TEXT</td>
+                        <td>Review text</td>
+                    </tr>
+                    <tr>
+                        <td>user_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Who wrote the review</td>
+                    </tr>
+                    <tr>
+                        <td>product_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Which product</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>DATETIME</td>
+                        <td>Review timestamp</td>
+                    </tr>
+                </table>
+
+                <h4>🛒 8. cart_items - Shopping Cart</h4>
+                <p>Items currently in user's cart (not yet purchased).</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique cart item ID</td>
+                    </tr>
+                    <tr>
+                        <td>quantity</td>
+                        <td>INT</td>
+                        <td>Always 1 for digital products</td>
+                    </tr>
+                    <tr>
+                        <td>user_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Cart owner</td>
+                    </tr>
+                    <tr>
+                        <td>product_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Product in cart</td>
+                    </tr>
+                    <tr>
+                        <td>added_at</td>
+                        <td>DATETIME</td>
+                        <td>When added to cart</td>
+                    </tr>
+                </table>
+
+                <h4>📦 9. orders - Completed Purchases</h4>
+                <p>Order history and payment tracking.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique order ID</td>
+                    </tr>
+                    <tr>
+                        <td>order_number</td>
+                        <td>VARCHAR(50)</td>
+                        <td>Human-readable order # (e.g., "ORD-2024-0001")</td>
+                    </tr>
+                    <tr>
+                        <td>total_amount</td>
+                        <td>DECIMAL(10,2)</td>
+                        <td>Total price</td>
+                    </tr>
+                    <tr>
+                        <td>status</td>
+                        <td>VARCHAR(20)</td>
+                        <td>PENDING, COMPLETED, CANCELLED</td>
+                    </tr>
+                    <tr>
+                        <td>user_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Buyer</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>DATETIME</td>
+                        <td>Purchase timestamp</td>
+                    </tr>
+                </table>
+
+                <h4>📄 10. order_items - Products in Order</h4>
+                <p>Which products are in which order.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique order item ID</td>
+                    </tr>
+                    <tr>
+                        <td>price</td>
+                        <td>DECIMAL(10,2)</td>
+                        <td>Price at time of purchase</td>
+                    </tr>
+                    <tr>
+                        <td>order_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Which order</td>
+                    </tr>
+                    <tr>
+                        <td>product_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Which product</td>
+                    </tr>
+                </table>
+
+                <h4>📝 11. seller_requests - Become a Seller</h4>
+                <p>Users requesting seller privileges.</p>
+                <table>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>BIGINT (PK)</td>
+                        <td>Unique request ID</td>
+                    </tr>
+                    <tr>
+                        <td>message</td>
+                        <td>TEXT</td>
+                        <td>Why they want to sell</td>
+                    </tr>
+                    <tr>
+                        <td>status</td>
+                        <td>VARCHAR(20)</td>
+                        <td>PENDING, APPROVED, REJECTED</td>
+                    </tr>
+                    <tr>
+                        <td>user_id</td>
+                        <td>BIGINT (FK)</td>
+                        <td>Requesting user</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>DATETIME</td>
+                        <td>Request timestamp</td>
+                    </tr>
+                </table>
+
+                <h3>Entity Relationships</h3>
+                <pre>users (1) ──────── (Many) products        [One seller has many products]
+users (1) ──────── (Many) cart_items      [One user has many cart items]
+users (1) ──────── (Many) orders          [One user has many orders]
+users (1) ──────── (Many) reviews         [One user writes many reviews]
+users (Many) ───── (Many) roles           [Many users have many roles]
+
+products (1) ───── (Many) images          [One product has many images]
+products (1) ───── (Many) reviews         [One product has many reviews]
+products (1) ───── (Many) cart_items      [One product in many carts]
+products (1) ───── (Many) order_items     [One product in many orders]
+products (Many) ── (1) categories         [Many products in one category]
+
+orders (1) ────── (Many) order_items     [One order has many items]</pre>
+
+                <h3>Why This Design?</h3>
+                <ul>
+                    <li><strong>Normalization:</strong> Data isn't duplicated (efficient storage)</li>
+                    <li><strong>Scalability:</strong> Easy to add new features</li>
+                    <li><strong>Integrity:</strong> Foreign keys prevent orphaned data</li>
+                    <li><strong>Flexibility:</strong> Users can have multiple roles</li>
+                </ul>
+
+                <h3>Sample Data Flow: Making a Purchase</h3>
+                <ol>
+                    <li>User browses <code>products</code> table</li>
+                    <li>Adds product to cart → creates <code>cart_items</code> record</li>
+                    <li>Clicks checkout → creates <code>orders</code> record</li>
+                    <li>System creates <code>order_items</code> for each cart item</li>
+                    <li>Cart items are deleted</li>
+                    <li>User can now download from <code>order_items</code></li>
+                </ol>
+
+                <div class="warning">
+                    <strong>💡 Note:</strong> Hibernate will auto-create these tables when you run the app (thanks to <code>spring.jpa.hibernate.ddl-auto=update</code>). No manual SQL needed!
+                </div>
+
+                <div class="success">
+                    <strong>✅ Module Complete!</strong> You now understand the database structure. Click "04. User & Role Entities" to start coding.
+                </div>
+
+                <h3>📚 Resources</h3>
+                <ul>
+                    <li><a href="https://www.lucidchart.com/pages/er-diagrams">ER Diagram Tutorial</a></li>
+                    <li><a href="https://www.mysqltutorial.org/mysql-foreign-key/">MySQL Foreign Keys</a></li>
+                    <li><a href="https://docs.jboss.org/hibernate/orm/6.3/introduction/html_single/Hibernate_Introduction.html">Hibernate ORM Guide</a></li>
+                </ul>
+            </div>
+
+            <!-- Add placeholder for remaining modules -->
+            <div class="module" id="m4">
+                <h2>Module 4-36: Coming Soon</h2>
+                <p>The remaining modules are being finalized. Continue building your knowledge with the foundation modules above!</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    function show(num) {
+        // Hide all modules
+        var modules = document.getElementsByClassName('module');
+        for (var i = 0; i < modules.length; i++) {
+            modules[i].classList.remove('active');
+        }
+        
+        // Remove active from all nav items
+        var navs = document.getElementsByClassName('nav-item');
+        for (var i = 0; i < navs.length; i++) {
+            navs[i].classList.remove('active');
+        }
+        
+        // Show selected module
+        var targetModule = document.getElementById('m' + num);
+        if (targetModule) {
+            targetModule.classList.add('active');
+        }
+        
+        // Add active to clicked nav item
+        event.target.classList.add('active');
+        
+        // Scroll to top
+        document.querySelector('.content').scrollTop = 0;
+    }
+    </script>
+</body>
+</html>
